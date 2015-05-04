@@ -90,7 +90,7 @@ double GetIsolation(const int ilep, const int ParticleType, const double rmax, c
 
     for (unsigned int icand = 0; icand < pfcand_pt->size(); icand++) {
         if (icand==match_index) continue;
-        uint pdgId = TMath::Nint(pfcand_pdgId->at(icand));
+        uint pdgId = abs(TMath::Nint(pfcand_pdgId->at(icand)));
         if (pdgId<7) continue;
         if(isnan(pfcand_pt->at(icand))
                 || isnan(pfcand_eta->at(icand))
@@ -125,7 +125,7 @@ double GetIsolation(const int ilep, const int ParticleType, const double rmax, c
             }
             ////////////////// CHARGED from PV /////////////////////////
         } else if (pfcand_fromPV->at(icand)>1){
-            if (fabs(pdgId)==211) {
+            if (pdgId==211) {
                 if(dr < deadcone_ch) continue;
                 if (dr<R) {
                     // if (ParticleType==13) cout << "Adding to cone.." << endl;

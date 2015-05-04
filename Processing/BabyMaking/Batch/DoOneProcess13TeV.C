@@ -250,7 +250,7 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
     vector<float> FatjetEta_pT30_;
     vector<float> FatjetPhi_pT30_;
     vector<float> FatjetN_pT30_;
-    vector<float> mj_R0p8_pT30_Eta5_;
+    /* vector<float> mj_R0p8_pT30_Eta5_;
     vector<float> FatjetPt_R0p8_pT30_Eta5_;
     vector<float> FatjetEta_R0p8_pT30_Eta5_;
     vector<float> FatjetPhi_R0p8_pT30_Eta5_;
@@ -282,6 +282,7 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
     vector<float> FatjetPt_R1p5_pT30_Eta5_;
     vector<float> FatjetEta_R1p5_pT30_Eta5_;
     vector<float> FatjetPhi_R1p5_pT30_Eta5_;
+    */
     /*
     vector<float> mj_R1p6_pT30_Eta5_;
     vector<float> FatjetPt_R1p6_pT30_Eta5_;
@@ -296,7 +297,7 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
     vector<float> FatjetEta_R1p8_pT30_Eta5_;
     vector<float> FatjetPhi_R1p8_pT30_Eta5_;
     */
-    vector<float> mj_R0p8_pT30_Eta2p5_;
+    /* vector<float> mj_R0p8_pT30_Eta2p5_;
     vector<float> FatjetPt_R0p8_pT30_Eta2p5_;
     vector<float> FatjetEta_R0p8_pT30_Eta2p5_;
     vector<float> FatjetPhi_R0p8_pT30_Eta2p5_;
@@ -347,8 +348,8 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
     vector<float> mj_R1p2_pT60_Eta2p5_;
     vector<float> FatjetPt_R1p2_pT60_Eta2p5_;
     vector<float> FatjetEta_R1p2_pT60_Eta2p5_;
-    vector<float> FatjetPhi_R1p2_pT60_Eta2p5_; 
-    vector<float> RA4ElsPt_;
+    vector<float> FatjetPhi_R1p2_pT60_Eta2p5_; */
+    /*vector<float> RA4ElsPt_;
     vector<float> RA4ElsEta_;
     vector<float> RA4ElsPhi_;
     vector<float> RA4MusPt_;
@@ -364,7 +365,7 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
     vector<float> JetPt_;
     vector<float> JetEta_;
     vector<float> JetPhi_;
-    vector<float> JetCSV_;
+    vector<float> JetCSV_;*/
     vector<float> RA4ElsPt_mi_;
     vector<float> RA4ElsEta_mi_;
     vector<float> RA4ElsPhi_mi_;
@@ -405,7 +406,7 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
     vector<float> MCJetPt_;
     vector<float> MCJetEta_;
     vector<float> MCJetPhi_;
-    vector<float> Genmj_R0p8_pT30_Eta2p5_;
+    /* vector<float> Genmj_R0p8_pT30_Eta2p5_;
     vector<float> GenFatjetPt_R0p8_pT30_Eta2p5_;
     vector<float> GenFatjetEta_R0p8_pT30_Eta2p5_;
     vector<float> GenFatjetPhi_R0p8_pT30_Eta2p5_;
@@ -440,7 +441,7 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
     vector<float> Genmj_R1p2_pT60_Eta2p5_;
     vector<float> GenFatjetPt_R1p2_pT60_Eta2p5_;
     vector<float> GenFatjetEta_R1p2_pT60_Eta2p5_;
-    vector<float> GenFatjetPhi_R1p2_pT60_Eta2p5_;
+    vector<float> GenFatjetPhi_R1p2_pT60_Eta2p5_;*/
     
     babyTree_->Branch("run",            	&run_);    
     babyTree_->Branch("lumiblock",      	&lumiblock_); 
@@ -475,7 +476,7 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
     babyTree_->Branch("FatjetEta_pT30", 	&FatjetEta_pT30_);
     babyTree_->Branch("FatjetPhi_pT30",     &FatjetPhi_pT30_);
     babyTree_->Branch("FatjetN_pT30",       &FatjetN_pT30_);
-    babyTree_->Branch("mj_R0p8_pT30_Eta5",        	&mj_R0p8_pT30_Eta5_);     
+    /* babyTree_->Branch("mj_R0p8_pT30_Eta5",        	&mj_R0p8_pT30_Eta5_);     
     babyTree_->Branch("FatjetPt_R0p8_pT30_Eta5",  	&FatjetPt_R0p8_pT30_Eta5_); 
     babyTree_->Branch("FatjetEta_R0p8_pT30_Eta5", 	&FatjetEta_R0p8_pT30_Eta5_);
     babyTree_->Branch("FatjetPhi_R0p8_pT30_Eta5",     &FatjetPhi_R0p8_pT30_Eta5_);
@@ -506,7 +507,7 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
     babyTree_->Branch("mj_R1p5_pT30_Eta5",        	&mj_R1p5_pT30_Eta5_);     
     babyTree_->Branch("FatjetPt_R1p5_pT30_Eta5",  	&FatjetPt_R1p5_pT30_Eta5_); 
     babyTree_->Branch("FatjetEta_R1p5_pT30_Eta5", 	&FatjetEta_R1p5_pT30_Eta5_);
-    babyTree_->Branch("FatjetPhi_R1p5_pT30_Eta5",     &FatjetPhi_R1p5_pT30_Eta5_);
+    babyTree_->Branch("FatjetPhi_R1p5_pT30_Eta5",     &FatjetPhi_R1p5_pT30_Eta5_);*/
     /*
     babyTree_->Branch("mj_R1p6_pT30_Eta5",        	&mj_R1p6_pT30_Eta5_);     
     babyTree_->Branch("FatjetPt_R1p6_pT30_Eta5",  	&FatjetPt_R1p6_pT30_Eta5_); 
@@ -521,7 +522,7 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
     babyTree_->Branch("FatjetEta_R1p8_pT30_Eta5", 	&FatjetEta_R1p8_pT30_Eta5_);
     babyTree_->Branch("FatjetPhi_R1p8_pT30_Eta5",     &FatjetPhi_R1p8_pT30_Eta5_);
     */
-    babyTree_->Branch("mj_R0p8_pT30_Eta2p5",        	&mj_R0p8_pT30_Eta2p5_);     
+    /*babyTree_->Branch("mj_R0p8_pT30_Eta2p5",        	&mj_R0p8_pT30_Eta2p5_);     
     babyTree_->Branch("FatjetPt_R0p8_pT30_Eta2p5",  	&FatjetPt_R0p8_pT30_Eta2p5_); 
     babyTree_->Branch("FatjetEta_R0p8_pT30_Eta2p5", 	&FatjetEta_R0p8_pT30_Eta2p5_);
     babyTree_->Branch("FatjetPhi_R0p8_pT30_Eta2p5",     &FatjetPhi_R0p8_pT30_Eta2p5_);
@@ -589,7 +590,7 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
     babyTree_->Branch("JetPt",              &JetPt_);
     babyTree_->Branch("JetEta",             &JetEta_);
     babyTree_->Branch("JetPhi",             &JetPhi_);
-    babyTree_->Branch("JetCSV",             &JetCSV_);
+    babyTree_->Branch("JetCSV",             &JetCSV_);*/
     babyTree_->Branch("RA4ElsPt_mi",        &RA4ElsPt_mi_);
     babyTree_->Branch("RA4ElsEta_mi",       &RA4ElsEta_mi_);
     babyTree_->Branch("RA4ElsPhi_mi",       &RA4ElsPhi_mi_);
@@ -630,7 +631,7 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
     babyTree_->Branch("MCJetPt",            &MCJetPt_);
     babyTree_->Branch("MCJetEta",           &MCJetEta_);
     babyTree_->Branch("MCJetPhi",           &MCJetPhi_);
-    babyTree_->Branch("Genmj_R0p8_pT30_Eta2p5",        	&Genmj_R0p8_pT30_Eta2p5_);     
+    /* babyTree_->Branch("Genmj_R0p8_pT30_Eta2p5",        	&Genmj_R0p8_pT30_Eta2p5_);     
     babyTree_->Branch("GenFatjetPt_R0p8_pT30_Eta2p5",  	&GenFatjetPt_R0p8_pT30_Eta2p5_); 
     babyTree_->Branch("GenFatjetEta_R0p8_pT30_Eta2p5", 	&GenFatjetEta_R0p8_pT30_Eta2p5_);
     babyTree_->Branch("GenFatjetPhi_R0p8_pT30_Eta2p5",  &GenFatjetPhi_R0p8_pT30_Eta2p5_);
@@ -665,7 +666,7 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
     babyTree_->Branch("Genmj_R1p2_pT60_Eta2p5",        	&Genmj_R1p2_pT60_Eta2p5_);     
     babyTree_->Branch("GenFatjetPt_R1p2_pT60_Eta2p5",  	&GenFatjetPt_R1p2_pT60_Eta2p5_); 
     babyTree_->Branch("GenFatjetEta_R1p2_pT60_Eta2p5", 	&GenFatjetEta_R1p2_pT60_Eta2p5_);
-    babyTree_->Branch("GenFatjetPhi_R1p2_pT60_Eta2p5",  &GenFatjetPhi_R1p2_pT60_Eta2p5_);
+    babyTree_->Branch("GenFatjetPhi_R1p2_pT60_Eta2p5",  &GenFatjetPhi_R1p2_pT60_Eta2p5_);*/
    
     // 
     // Event weights
@@ -756,7 +757,7 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
         FatjetEta_pT30_.clear();
         FatjetPhi_pT30_.clear();
         FatjetN_pT30_.clear();
-        mj_R0p8_pT30_Eta5_.clear();
+	/* mj_R0p8_pT30_Eta5_.clear();
         FatjetPt_R0p8_pT30_Eta5_.clear();
         FatjetEta_R0p8_pT30_Eta5_.clear();
         FatjetPhi_R0p8_pT30_Eta5_.clear();
@@ -787,7 +788,7 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
         mj_R1p5_pT30_Eta5_.clear();
         FatjetPt_R1p5_pT30_Eta5_.clear();
         FatjetEta_R1p5_pT30_Eta5_.clear();
-        FatjetPhi_R1p5_pT30_Eta5_.clear();
+        FatjetPhi_R1p5_pT30_Eta5_.clear();*/
         /*
         mj_R1p6_pT30_Eta5_.clear();
         FatjetPt_R1p6_pT30_Eta5_.clear();
@@ -802,7 +803,7 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
         FatjetEta_R1p8_pT30_Eta5_.clear();
         FatjetPhi_R1p8_pT30_Eta5_.clear();
         */
-        mj_R0p8_pT30_Eta2p5_.clear();
+	/*  mj_R0p8_pT30_Eta2p5_.clear();
         FatjetPt_R0p8_pT30_Eta2p5_.clear();
         FatjetEta_R0p8_pT30_Eta2p5_.clear();
         FatjetPhi_R0p8_pT30_Eta2p5_.clear();
@@ -870,7 +871,7 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
         JetPt_.clear();
         JetEta_.clear();
         JetPhi_.clear();
-        JetCSV_.clear();
+        JetCSV_.clear();*/
         RA4ElsPt_mi_.clear();
         RA4ElsEta_mi_.clear();
         RA4ElsPhi_mi_.clear();
@@ -911,7 +912,7 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
         MCJetPt_.clear();
         MCJetEta_.clear();
         MCJetPhi_.clear();
-        Genmj_R0p8_pT30_Eta2p5_.clear();
+	/* Genmj_R0p8_pT30_Eta2p5_.clear();
         GenFatjetPt_R0p8_pT30_Eta2p5_.clear();
         GenFatjetEta_R0p8_pT30_Eta2p5_.clear();
         GenFatjetPhi_R0p8_pT30_Eta2p5_.clear();
@@ -946,7 +947,7 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
         Genmj_R1p2_pT60_Eta2p5_.clear();
         GenFatjetPt_R1p2_pT60_Eta2p5_.clear();
         GenFatjetEta_R1p2_pT60_Eta2p5_.clear();
-        GenFatjetPhi_R1p2_pT60_Eta2p5_.clear();
+        GenFatjetPhi_R1p2_pT60_Eta2p5_.clear();*/
 
         //
         // Core analysis 
@@ -967,21 +968,21 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
         // Reliso 
         //
         // Get good RA4 muons
-        vector<int> RA4MuonVeto = GetMuons(false, false);
+	/* vector<int> RA4MuonVeto = GetMuons(false, false);
         vector<int> RA4Muon     = GetMuons(true, false);
         // Get good RA4 electrons
         vector<int> RA4ElecVeto = GetElectrons(false, false);
-        vector<int> RA4Elec     = GetElectrons(true, false);
+        vector<int> RA4Elec     = GetElectrons(true, false);*/
         // Get good skinny jets, HT and B-tagged jets 
-        float HT=-999.; 
-        vector<int> GoodJets_AK4 = GetJets(RA4Elec,RA4Muon,RA4ElecVeto,RA4MuonVeto,HT);
+        //float HT=-999.; 
+        //vector<int> GoodJets_AK4 = GetJets(RA4Elec,RA4Muon,RA4ElecVeto,RA4MuonVeto,HT);
         // Nbtag 
-        int Ncsvm=0;
-        int Ncsvl=0;
-        for(int j=0; j<(int)GoodJets_AK4.size(); j++)
+        //int Ncsvm=0;
+        //int Ncsvl=0;
+        //for(int j=0; j<(int)GoodJets_AK4.size(); j++)
         { 
-            if(jets_AK4_btag_inc_secVertexCombined->at(GoodJets_AK4.at(j)) > 0.814/*0.679*/) Ncsvm++; 
-            if(jets_AK4_btag_inc_secVertexCombined->at(GoodJets_AK4.at(j)) > 0.423/*0.244*/) Ncsvl++; 
+	  //   if(jets_AK4_btag_inc_secVertexCombined->at(GoodJets_AK4.at(j)) > 0.814/*0.679*/) Ncsvm++; 
+          //  if(jets_AK4_btag_inc_secVertexCombined->at(GoodJets_AK4.at(j)) > 0.423/*0.244*/) Ncsvl++; 
         }
         
         //
@@ -1012,9 +1013,9 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
         GetIsoTracks(eCands,muCands,hadCands);
 
         // Skim : HT>500 MET>250
-        //if( HT<500 && HT_mini<500) continue;
+        if(HT_mini<500) continue;
         //if(pfType1mets_et->at(0)<200) continue;
-        //if( (RA4Muon_mini.size()+RA4Elec_mini.size())<2 && (RA4Muon.size()+RA4Elec.size())<2 ) continue;
+        if(RA4Muon_mini.size()<2 && RA4Elec_mini.size()<2) continue;
 
         // 
         // pT(R=0.5) > 30 GeV
@@ -1041,7 +1042,7 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
         */
 
         vector<float> Vector_mj_pT30;   // mj
-        for(int ifj=0; ifj<fjets30_m->size(); ifj++) 
+        for(uint ifj=0; ifj<fjets30_m->size(); ifj++) 
         {
             Vector_mj_pT30.push_back(fjets30_m->at(ifj));
         }
@@ -1052,29 +1053,29 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
         // 
         // Fat jets on-the-fly vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv 
         // 
-        vector<TLorentzVector> FatJetConstituent; 
+	/* vector<TLorentzVector> FatJetConstituent; 
         for(unsigned int ijet=0;ijet<jets_AK4_pt->size();ijet++)
         {
             TLorentzVector tmp(jets_AK4_px->at(ijet),jets_AK4_py->at(ijet),
                                jets_AK4_pz->at(ijet), jets_AK4_energy->at(ijet));
             FatJetConstituent.push_back(tmp);
-        }
+	    }*/
 
         //  R=0.8-1.5  pT(SJ)>30  |eta|<5
-        vector<TLorentzVector>  FatJet_R0p8_pT30_Eta5 = makeFatJet(FatJetConstituent, 0.8, 30, 5);
+	/*  vector<TLorentzVector>  FatJet_R0p8_pT30_Eta5 = makeFatJet(FatJetConstituent, 0.8, 30, 5);
         vector<TLorentzVector>  FatJet_R0p9_pT30_Eta5 = makeFatJet(FatJetConstituent, 0.9, 30, 5);
         vector<TLorentzVector>  FatJet_R1p0_pT30_Eta5 = makeFatJet(FatJetConstituent, 1.0, 30, 5);
         vector<TLorentzVector>  FatJet_R1p1_pT30_Eta5 = makeFatJet(FatJetConstituent, 1.1, 30, 5);
         vector<TLorentzVector>  FatJet_R1p2_pT30_Eta5 = makeFatJet(FatJetConstituent, 1.2, 30, 5);
         vector<TLorentzVector>  FatJet_R1p3_pT30_Eta5 = makeFatJet(FatJetConstituent, 1.3, 30, 5);
         vector<TLorentzVector>  FatJet_R1p4_pT30_Eta5 = makeFatJet(FatJetConstituent, 1.4, 30, 5);
-        vector<TLorentzVector>  FatJet_R1p5_pT30_Eta5 = makeFatJet(FatJetConstituent, 1.5, 30, 5);
+        vector<TLorentzVector>  FatJet_R1p5_pT30_Eta5 = makeFatJet(FatJetConstituent, 1.5, 30, 5);*/
 /*
         vector<TLorentzVector>  FatJet_R1p6_pT30_Eta5 = makeFatJet(FatJetConstituent, 1.6, 30, 5);
         vector<TLorentzVector>  FatJet_R1p7_pT30_Eta5 = makeFatJet(FatJetConstituent, 1.7, 30, 5);
         vector<TLorentzVector>  FatJet_R1p8_pT30_Eta5 = makeFatJet(FatJetConstituent, 1.8, 30, 5);
 */
-        for(unsigned int ifj=0; ifj<FatJet_R0p8_pT30_Eta5.size();ifj++)
+	/* for(unsigned int ifj=0; ifj<FatJet_R0p8_pT30_Eta5.size();ifj++)
         {
             mj_R0p8_pT30_Eta5_.push_back(FatJet_R0p8_pT30_Eta5.at(ifj).M());
             FatjetPt_R0p8_pT30_Eta5_.push_back(FatJet_R0p8_pT30_Eta5.at(ifj).Pt());
@@ -1130,6 +1131,7 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
             FatjetEta_R1p5_pT30_Eta5_.push_back(FatJet_R1p5_pT30_Eta5.at(ifj).Eta());
             FatjetPhi_R1p5_pT30_Eta5_.push_back(FatJet_R1p5_pT30_Eta5.at(ifj).Phi());
         }
+	*/
 /*
         for(unsigned int ifj=0; ifj<FatJet_R1p6_pT30_Eta5.size();ifj++)
         {
@@ -1154,7 +1156,7 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
         }
 */
         //  R=0.8-1.5  pT(SJ)>30  |eta|<2.5
-        vector<TLorentzVector>  FatJet_R0p8_pT30_Eta2p5 = makeFatJet(FatJetConstituent, 0.8, 30, 2.5);
+	/* vector<TLorentzVector>  FatJet_R0p8_pT30_Eta2p5 = makeFatJet(FatJetConstituent, 0.8, 30, 2.5);
         vector<TLorentzVector>  FatJet_R0p9_pT30_Eta2p5 = makeFatJet(FatJetConstituent, 0.9, 30, 2.5);
         vector<TLorentzVector>  FatJet_R1p0_pT30_Eta2p5 = makeFatJet(FatJetConstituent, 1.0, 30, 2.5);
         vector<TLorentzVector>  FatJet_R1p1_pT30_Eta2p5 = makeFatJet(FatJetConstituent, 1.1, 30, 2.5);
@@ -1260,10 +1262,11 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
             FatjetEta_R1p2_pT60_Eta2p5_.push_back(FatJet_R1p2_pT60_Eta2p5.at(ifj).Eta());
             FatjetPhi_R1p2_pT60_Eta2p5_.push_back(FatJet_R1p2_pT60_Eta2p5.at(ifj).Phi());
         }
-     
+	*/
         //
         // Cluster GenJet to make FJ 
         //
+	/*
         vector<TLorentzVector> GenFatJetConstituent; 
         for(int imcjet=0; imcjet<mc_jets_pt->size(); imcjet++) 
         {
@@ -1347,7 +1350,7 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
             GenFatjetPt_R1p2_pT60_Eta2p5_.push_back(GenFatJet_R1p2_pT60_Eta2p5.at(ifj).Pt());
             GenFatjetEta_R1p2_pT60_Eta2p5_.push_back(GenFatJet_R1p2_pT60_Eta2p5.at(ifj).Eta());
             GenFatjetPhi_R1p2_pT60_Eta2p5_.push_back(GenFatJet_R1p2_pT60_Eta2p5.at(ifj).Phi());
-        }
+        }*/
         // Fat jets on-the-fly ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
 
 
@@ -1365,15 +1368,15 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
         //TrigHTMuon_         =   PassHTMuonTrig(); 
         //TrigSingleMuon_     =   PassSingleMuonTrig(); 
         Nfatjet_pT30_       =   Nfatjet_pT30;
-        Nskinnyjet_         =   GoodJets_AK4.size();
-        NBtagCSVM_          =   Ncsvm;
-        NBtagCSVL_          =   Ncsvl;
+        Nskinnyjet_         =   GoodJets_AK4_mini.size();
+        NBtagCSVM_          =   Ncsvm_mini;
+        NBtagCSVL_          =   Ncsvl_mini;
         EventWeight_        =   EventWeight;
         EventWeightNeg_     =   EventWeightNeg;
         MJ_pT30_            =   MJ_pT30;
         MET_                =   pfType1mets_et->at(0);
         METPhi_             =   pfType1mets_phi->at(0);
-        HT_                 =   HT;
+        HT_                 =   HT_mini;
         Npv_                =   Npv;
         for(unsigned int bc(0); bc<PU_bunchCrossing->size(); ++bc)
         {
@@ -1393,7 +1396,7 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
             //FatjetN_pT30_.push_back(fastjets_AK4_R1p2_R0p5pT30_nconstituents->at(Vector_GoodFatjet_pT30_Index.at(igoodfatjet)));
         }
         // RelIso
-        for(unsigned int imus=0; imus<RA4Muon.size(); imus++) 
+	/* for(unsigned int imus=0; imus<RA4Muon.size(); imus++) 
         {
             //cout << "[DEBUG] [Muon] mini-isolation : " << imus << " :: " << GetIsolation(imus, 13, 0.2, false, true, true, true, false) << endl;
             RA4MusPt_.push_back(mus_pt->at(RA4Muon.at(imus)));
@@ -1428,6 +1431,7 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
           JetPhi_.push_back(jets_AK4_phi->at(ijet)); 
           JetCSV_.push_back(jets_AK4_btag_inc_secVertexCombined->at(ijet)); 
         }
+	*/
         // MiniIso
         for(unsigned int imus=0; imus<RA4Muon_mini.size(); imus++) 
         {
@@ -1523,14 +1527,14 @@ void DoOneProcess13TeV(TString InputName, TString ProcessName, int ibegin, int i
                 }
             }
         }
-        for(int igenjet=0; igenjet<jets_AK4_gen_pt->size(); igenjet++) 
+        for(uint igenjet=0; igenjet<jets_AK4_gen_pt->size(); igenjet++) 
         { 
             GenJetPt_.push_back(jets_AK4_gen_pt->at(igenjet)); 
             //GenJetEta_.push_back(jets_AK4_gen_eta->at(igenjet)); 
             //GenJetPhi_.push_back(jets_AK4_gen_phi->at(igenjet)); 
         }
         GenMET_                =   pfType1mets_gen_et->at(0);
-        for(int imcjet=0; imcjet<mc_jets_pt->size(); imcjet++) 
+        for(uint imcjet=0; imcjet<mc_jets_pt->size(); imcjet++) 
         { 
             MCJetE_.push_back(mc_jets_energy->at(imcjet)); 
             MCJetPt_.push_back(mc_jets_pt->at(imcjet)); 
