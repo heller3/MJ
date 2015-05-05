@@ -11,6 +11,7 @@
 #include "TLegend.h"
 #include "TMath.h"
 #include "TGraphErrors.h"
+
 #include "Configuration.h"
 #include "babytree_mi.h"
 #include "PassSelection.h"
@@ -855,12 +856,14 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
       if(ChainName.Contains("TT_ll") && Ngenlep!=2) continue;  
       if(ChainName.Contains("TT_sys") && !(Ngenlep==2 || Ngenlep==1)) continue;  
       //calc HT
+      
       float HT40 =0.0;
       int RA4NSJ=0;
       int RA4NB=0;
       float dphimin=10.;
+      
       for(unsigned int a=0;a<JetPt_->size();a++){
-	if(JetPt_->at(a)>=40. && TMath::Abs(JetEta_->at(a))<=2.5){ 
+	if(JetPt_->at(a)>=40. && (!manuel || JetIsLep_->at(a)>=false) && TMath::Abs(JetEta_->at(a))<=2.5){ 
 	  HT40+=JetPt_->at(a);
 	  RA4NSJ++;
 	  if(JetCSV_->at(a)>=0.814) {
@@ -869,14 +872,19 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
 	  }
 	}
       }
-
+      
+      if(manuel){
+	HT40=HT_;
+	RA4NSJ=Nskinnyjet_;
+	RA4NB=NBtagCSVM_;
+      }
       //REMOVE THIS
       // RA4NSJ = JetPt_->size();
       //if(HT40<=750 || RA4NB==0) continue;
 	
       int nISR=0;
       if(status)EventWeight_ = EventWeight_*4000.;
-      if(EventWeightNeg_<0) EventWeight_*= (-1.0);
+      if(!manuel && EventWeightNeg_<0) EventWeight_*= (-1.0);
       // 
       // weights 
       // 
@@ -886,18 +894,18 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
 	  { 
 	  EventWeight_ = EventWeight_*806.1/832.; // I used 832 pb while M used 806.1 pb.
 	  }*/
-      float ISRpT;
+      float ISRpT=0;
       float orig_weight=EventWeight_;
       N_pre_toppT+=EventWeight_;
-      if(ChainName.Contains("TT"))
+      if(ChainName.Contains("TT") && !manuel)
 	{
 	  if(status) nISR = GetnISR();
 	  float ISRpx = top1pT_*TMath::Cos(top1Phi_) + top2pT_*TMath::Cos(top2Phi_);
 	  float ISRpy = top1pT_*TMath::Sin(top1Phi_) + top2pT_*TMath::Sin(top2Phi_);
 	  ISRpT = TMath::Sqrt(ISRpx*ISRpx+ISRpy*ISRpy);
 	}
-      if(ChainName.Contains("TT_sys"))
-	{	  
+      if(ChainName.Contains("TT_sys")&& !manuel)
+	{	
 	  //v1
 	    
 	  if(ChainName.Contains("toppT1")){
@@ -944,7 +952,7 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
 	}
 	
       N_post_toppT+=EventWeight_;
-      if(ChainName.Contains("TT")) {
+      if(ChainName.Contains("TT") && !manuel) {
 	FillTH1F(h1_ttbarpT_incl, ISRpT, EventWeight_);
 	FillTH1F(h1_toppT_incl, top1pT_, EventWeight_);
 	FillTH1F(h1_nISR_incl, nISR, EventWeight_);
@@ -959,8 +967,8 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
       // single-lepton events selection
       //
       //if(flagged) cout<<"flagged event HT40 NSJ NB RA4mus RA4els RA4musveto RA4elsveto "<<event_<<"   "<<HT40<<"   "<<RA4NSJ<<"   "<<RA4NB<<"   "<<RA4MusPt_->size()<<"   "<<RA4ElsPt_->size()<<"   "<<RA4MusVetoPt_->size()<<"   "<<RA4ElsVetoPt_->size()<<endl;
-      if(!(PassNLep(1) || PassNLep(2)))  continue; // need this upfront because of mT calculation
-
+      if(!manuel && (!(PassNLep(1) || PassNLep(2))))  continue; // need this upfront because of mT calculation
+      if(manuel && ( (nels_+nmus_)<1 || (nels_+nmus_) >2)) continue
       // Nfatjet, MJ, mj sorting 
       int Nfatjet_thres = 0;
       double MJ_thres=0; 
@@ -981,6 +989,7 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
       //
       double mT=0;
       double WpT=0;
+      if(!manuel){
       if(PassNLep(1)){
 	if(RA4MusPt_->size()==1) {
 	  mT  = TMath::Sqrt( 2*MET_*RA4MusPt_->at(0)*(1-TMath::Cos(METPhi_-RA4MusPhi_->at(0))) ); 
@@ -1037,6 +1046,8 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
 	}
 
       }
+      }
+      if(manuel) mT = mt_;
       //
       // Apply selection   
       //
@@ -1055,7 +1066,7 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
 	  cout << "[MJ Analysis] ERROR : NFJ is cannot be negative" << endl;
 	  continue;
         }
-
+     
       if(ChainName.Contains("baseline")){
 	// cout<<"Region == baseline"<<endl;
 	if( !PassSelection((TString)"lobbaseline", HT40, MET_, RA4NB, RA4NSJ, mT, MJ_thres)) continue;
@@ -1083,6 +1094,8 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
 	h1_yields_binned[NFJbin][bMJ][bMET][bMT][bnb][bsj][nHT]->Fill(lepbin,EventWeight_);
 	h1_yields_binned[6][bMJ][bMET][bMT][bnb][bsj][nHT]->Fill(lepbin,EventWeight_);
       }
+
+	   
       if( !PassSelection(Region, HT40, MET_, RA4NB, RA4NSJ, mT, MJ_thres,ChainName,Ngenlep)) continue;
 	
 	
@@ -1109,7 +1122,7 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
       if( (Ne==1 || Nm==1) && Nt==1 && (Ntn==1 && (Nen==1 || Nmn==1)) )           Nltl = Nltl + EventWeight_; 
       if( (Ne==1 || Nm==1) && Nt==1 && (Ntn==1 && (Nen==0 && Nmn==0)) )           Nlth = Nlth + EventWeight_; 
 	
-      if(ChainName.Contains("TT")) {
+      if(ChainName.Contains("TT") && !manuel) {
 	FillTH1FAll(h1_toppT1, NFJbin, top1pT_, EventWeight_);
 	FillTH1FAll(h1_toppT2, NFJbin, top2pT_, EventWeight_);
 	FillTH1FAll(h1_nISR, NFJbin, nISR, EventWeight_);
@@ -1123,12 +1136,19 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
       //
 
       // yields
-      if(RA4ElsPt_->size()==1) FillTH1FAll(h1_yields, NFJbin, 0.5, EventWeight_);   
+      if(!manuel){
+
+	if(RA4ElsPt_->size()==1) FillTH1FAll(h1_yields, NFJbin, 0.5, EventWeight_);   
       if(RA4MusPt_->size()==1) FillTH1FAll(h1_yields, NFJbin, 1.5, EventWeight_);
+      }
+      if(manuel){
+	if(nels_==1) FillTH1FAll(h1_yields, NFJbin, 0.5, EventWeight_);   
+	if(nmus_==1) FillTH1FAll(h1_yields, NFJbin, 1.5, EventWeight_);
+      }
       //if(NFJbin==5 && ChainName.Contains("TT_ll") ) eventlist.push_back(event_);
         
       // plots
-      if(RA4MusPt_->size()==1) {
+      if(RA4MusPt_->size()==1 && !manuel) {
 	FillTH1FAll(h1_muspT,   NFJbin,  RA4MusPt_->at(0),  EventWeight_); 
 	FillTH1FAll(h1_musEta,  NFJbin, RA4MusEta_->at(0), EventWeight_); 
 	FillTH1FAll(h1_musPhi,  NFJbin, RA4MusPhi_->at(0), EventWeight_); 
@@ -1137,7 +1157,7 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
 	    FillTH1FAll(h1_muspTminusMET, NFJbin, (MET_-RA4MusPt_->at(0))/RA4MusPt_->at(0), EventWeight_);   
 	  }
       }
-      if(RA4ElsPt_->size()==1) {
+      if(RA4ElsPt_->size()==1 && !manuel) {
 	FillTH1FAll(h1_elspT, NFJbin, RA4ElsPt_->at(0), EventWeight_);   
 	FillTH1FAll(h1_elsEta, NFJbin, RA4ElsEta_->at(0), EventWeight_); 
 	FillTH1FAll(h1_elsPhi, NFJbin, RA4ElsPhi_->at(0), EventWeight_); 
@@ -1160,6 +1180,7 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
       float m2_BFJ = -1;
       float m3_BFJ = -1;
       float MJ_BFJ=0;
+      if(!manuel){
       for(int ifj=0; ifj<(int)FatjetPt_->size(); ifj++)
 	{   
 	  if(FatjetPt_->at(ifj)<FatjetpTthres) continue; 
@@ -1200,7 +1221,7 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
       FillTH1FAll(h1_MJ_BFJ, NFJbin, MJ_BFJ, EventWeight_);
       FillTH1FAll(h1_max_nBSJ_perEvent, NFJbin, max_nBSJ, EventWeight_);
       FillTH1FAll(h1_max_sumCSV_perEvent, NFJbin, max_sumCSV, EventWeight_);
-	  
+      }
       
 
       if(NFJbin>1) FillTH2FAll(h2_mj1vsmj2, NFJbin, mj_thres_sorted.at(0), mj_thres_sorted.at(1), EventWeight_);           
@@ -1213,12 +1234,12 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
       FillTH2FAll(h2_HTMJ, NFJbin, HT40, MJ_thres,EventWeight_);       
       FillTH2FAll(h2_METmT, NFJbin, MET_, mT, EventWeight_);           
       FillTH1FAll(h1_mT,  NFJbin, mT, EventWeight_);                 
-      FillTH1FAll(h1_WpT, NFJbin, WpT, EventWeight_);               
+      // FillTH1FAll(h1_WpT, NFJbin, WpT, EventWeight_);               
       FillTH1FAll(h1_HT, NFJbin, HT40, EventWeight_);   
       FillTH1FAll(h1_MJ, NFJbin, MJ_thres, EventWeight_);
       FillTH1FAll(h1_MJ_coarse, NFJbin, MJ_thres, EventWeight_);
 
-      if(ChainName.Contains("TT_sys")){
+      if(ChainName.Contains("TT_sys") ){
 	if(MJ_thres<0) cout<<"MJ IS LESS THAN ZERO"<<endl;
 	int jbin = h1_MJ_coarse[NFJbin]->FindBin(MJ_thres)-1 ;
 	if(jbin<0 || jbin >= nbin) cout<<"jbin out of range."<<endl;
@@ -1232,8 +1253,8 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
       FillTH1FAll(h1_METPhi, NFJbin, METPhi_, EventWeight_);        
       FillTH1FAll(h1_METx, NFJbin, MET_*TMath::Cos(METPhi_), EventWeight_);           
       FillTH1FAll(h1_METy, NFJbin, MET_*TMath::Sin(METPhi_), EventWeight_);           
-      if(RA4MusPt_->size()==1) FillTH1FAll(h1_DPhi, NFJbin, getDPhi(RA4MusPhi_->at(0),METPhi_), EventWeight_);   
-      if(RA4ElsPt_->size()==1) FillTH1FAll(h1_DPhi, NFJbin, getDPhi(RA4ElsPhi_->at(0),METPhi_), EventWeight_);   
+      if(!manuel){ if(RA4MusPt_->size()==1) FillTH1FAll(h1_DPhi, NFJbin, getDPhi(RA4MusPhi_->at(0),METPhi_), EventWeight_);   
+	if(RA4ElsPt_->size()==1) FillTH1FAll(h1_DPhi, NFJbin, getDPhi(RA4ElsPhi_->at(0),METPhi_), EventWeight_);   }
         
       if(Nfatjet_thres>0) 
         {

@@ -15,10 +15,12 @@
 #include "TGraphErrors.h"
 
 
-int version = 30;
+int version = 31;
 bool OnlyEssential=true;
-TString BabyDir = "/Users/heller/Jae/ntuples/Phys14_13Apr2015/";
+//TString BabyDir = "/Users/heller/Jae/ntuples/Phys14_13Apr2015/";
+TString BabyDir = "/Users/heller/Jae/ntuples/Z_sample/";
 bool status =true;
+bool manuel=true;
 
     //"/Users/heller/Jae/ntuples/JetPt20_04April_NoSkim/";
 
@@ -64,6 +66,7 @@ int nregion=1;
 char* Regions[] = {"baseline_1B"};
 int SRthres=2;
 */
+/*
 TString study = "full_analysis";
 
 char* sysname[] = {"_nISR","_ISRpT3"};
@@ -72,8 +75,15 @@ int nsys=2;
 int nregion=5;
 char* Regions[] = {"1BCRincl","1BCRincl_lowMET","VR_2l","SRincl","SRincl_lowMET"};
 int SRthres=1;
+*/
+TString study = "Manuel_attempt";
 
+char* sysname[] = {""};
+int nsys=1;
 
+int nregion=1;
+char* Regions[] = {"SR1"};
+int SRthres=1;
 
 
 

@@ -17,6 +17,18 @@ bool PassNLep(unsigned int Nlep)
        
 }
 
+float SFOS_mass()
+{
+  float mass=-1;
+  if(RA4MusPt_->size() ==2 && RA4ElsPt_->size()==0){
+    if (RA4MusQ_->at(0) != RA4MusQ_->at(1)) mass = pow(2*RA4MusPt_->at(0)*RA4MusPt_->at(1),0.5);
+  }
+  else if(RA4MusPt_->size() ==0 && RA4ElsPt_->size()==2){
+    return (RA4ElsQ_->at(0) Q= RA4ElsQ_->at(1))
+  }
+  else return false;
+}
+
 // 
 bool PassBaselineSelection()
 {
@@ -49,6 +61,14 @@ bool PassSelection(TString Region,
 {
     bool passed=false;
 
+    if(Region=="ZCR"
+       && HT > 500 
+        && Nb > -1 
+        && Njet > -1
+        && MJ > -1
+       &&(RA4MusPt_->size())
+
+    
     if(Region=="nothing" 
         && HT > 500 
         && MET > 200
