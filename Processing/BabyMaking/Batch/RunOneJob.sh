@@ -39,7 +39,7 @@ echo "[DEBUG] Run the macro "
 
 $ROOTSYS/bin/root -b -q DoOneProcess13TeV.C++\(\"$DIR\",\"$RECOGNIZER\",$BEGINFILE,$ENDFILE,$ISDATA,$LUMI\) 
 echo "[DEBUG] Copy baby_${RECOGNIZER}_f${BEGINFILE}To${ENDFILE}.root to /net/cms26/cms26r0/jaehyeok/baby/Fatjet/13TeV"
-cp baby_${RECOGNIZER}_f${BEGINFILE}To${ENDFILE}.root /net/top/homes/heller/Babies/MJ/Processing/BabyMaking/ZJets
+cp baby_${RECOGNIZER}_f${BEGINFILE}To${ENDFILE}.root /cms7r0/heller/Babies/MJ/Processing/BabyMaking/ZJets
 
 #$ROOTSYS/bin/root -b -q DoOneProcess.C++\(\"$DIR\",\"$RECOGNIZER\",$BEGINFILE,$ENDFILE,$ISDATA,$LUMI\) 
 #echo "[DEBUG] Copy baby_${RECOGNIZER}_f${BEGINFILE}To${ENDFILE}.root to /net/cms26/cms26r0/jaehyeok/baby/Fatjet"

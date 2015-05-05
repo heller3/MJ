@@ -50,7 +50,8 @@ double GetIsolation(const int ilep, const int ParticleType, const double rmax, c
         lep_eta = els_eta->at(ilep);
         lep_phi = els_phi->at(ilep);
         ptThresh = 0;
-        if (fabs(lep_eta)>1.479) {deadcone_ch = 0.015; deadcone_pu = 0.015; deadcone_ph = 0.08;}
+        //if (fabs(lep_eta)>1.479) {deadcone_ch = 0.015; deadcone_pu = 0.015; deadcone_ph = 0.08;}
+	if (els_isEE->at(ilep)) {deadcone_ch = 0.015; deadcone_pu = 0.015; deadcone_ph = 0.08;}
     }else if(ParticleType==13){
         lep_pt = mus_pt->at(ilep);
         lep_eta = mus_eta->at(ilep);
@@ -336,7 +337,7 @@ bool IsVetoElectron(int iel, bool doMiniIso)
 
     return (els_pt->at(iel) > MinVetoLeptonPt
             && fabs(els_scEta->at(iel)) < 2.5
-            && ((els_isEB->at(iel) // Endcap selection
+            && ((els_isEB->at(iel) // Barrel selection
                     && els_full5x5_sigmaIetaIeta->at(iel)   < 0.011100
                     && fabs(els_dEtaIn->at(iel))            < 0.016315
                     && fabs(els_dPhiIn->at(iel))            < 0.252044
@@ -348,7 +349,7 @@ bool IsVetoElectron(int iel, bool doMiniIso)
                     && els_PATpassConversionVeto->at(iel)             
                     && passIso
                     ) ||
-                (els_isEE->at(iel)  // Barrel selection
+                (els_isEE->at(iel)  // Endcap selection
                     && els_full5x5_sigmaIetaIeta->at(iel)   < 0.033987
                     && fabs(els_dEtaIn->at(iel))            < 0.010671
                     && fabs(els_dPhiIn->at(iel))            < 0.245263
