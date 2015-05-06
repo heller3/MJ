@@ -11,13 +11,14 @@ bool PassNLep(unsigned int Nlep)
   for(unsigned int i=0;i<RA4ElsVetoPt_->size();i++){
     if(RA4ElsVetoPt_->at(i)>10) nveto++;
     }*/
-  if( (RA4MusPt_->size()+RA4ElsPt_->size())==Nlep && RA4MusVetoPt_->size()==0 
+  if(!manuel){if( (RA4MusPt_->size()+RA4ElsPt_->size())==Nlep && RA4MusVetoPt_->size()==0 
      && RA4ElsVetoPt_->size()==0 ) return true;
-  else return false;
+    else return false;}
+  if(manuel) return (nels_+nmus_)==static_cast<int>(Nlep);
        
 }
 
-float SFOS_mass()
+/*float SFOS_mass()
 {
   float mass=-1;
   if(RA4MusPt_->size() ==2 && RA4ElsPt_->size()==0){
@@ -28,7 +29,7 @@ float SFOS_mass()
   }
   else return false;
 }
-
+*/
 // 
 bool PassBaselineSelection()
 {
@@ -67,6 +68,7 @@ bool PassSelection(TString Region,
         && Njet > -1
         && MJ > -1
        &&(RA4MusPt_->size())
+       ) passed =true;
 
     
     if(Region=="nothing" 

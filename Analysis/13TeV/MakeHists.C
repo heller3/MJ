@@ -13,7 +13,7 @@
 #include "TGraphErrors.h"
 
 #include "Configuration.h"
-#include "babytree_mi.h"
+#include "babytree_manuel.h"
 #include "PassSelection.h"
 
 using namespace std;
@@ -229,7 +229,7 @@ float getISR4SF(float ISRpT)
   else if( ISRpT>240 ) return 0.9;
   else if( ISRpT>120) return 0.95;
   else return 1.0;
-  }
+}
 
 float GetNISRSF(int nISR){
   if(nISR>3) {cout<<"ERROR: n ISR = "<<nISR<<endl; MCDump(); return 1.0;}
@@ -279,7 +279,7 @@ float getDR(float eta1, float eta2, float phi1, float phi2)
   TEllipse *cone[FatjetPt_->size()]; 
   TH2F *h_fatjets = new TH2F("h_fatjets","h_fatjets", 230, -5.0, 5.0, 144, -3.141592, 3.141592);
   for(int ifj = 0; ifj< (int)FatjetPt_->size(); ifj++){
-    h_fatjets->Fill(FatjetEta_->at(ifj),FatjetPhi_->at(ifj),mj->at(ifj));
+  h_fatjets->Fill(FatjetEta_->at(ifj),FatjetPhi_->at(ifj),mj->at(ifj));
   }
 
   TString cname = Form("Event_%i_",event);
@@ -294,22 +294,22 @@ float getDR(float eta1, float eta2, float phi1, float phi2)
   h_fatjets->Draw("colz");
   gPad->Update();
 
-   TPaletteAxis *palette = (TPaletteAxis*)h_fatjets->GetListOfFunctions()->FindObject("palette");
+  TPaletteAxis *palette = (TPaletteAxis*)h_fatjets->GetListOfFunctions()->FindObject("palette");
   for(int ifj = 0; ifj< (int)FatjetPt_->size(); ifj++){
-    cone[ifj] = new TEllipse(FatjetEta_->at(ifj),FatjetPhi_->at(ifj), 1.2, 1.2);
-    //  cone[ifj]->SetFillStyle(3003);
-    cone[ifj]->SetFillStyle(0);
-    Int_t binx,biny,binz;
-    h_fatjets->GetBinXYZ(h_fatjets->FindBin(FatjetEta_->at(ifj),FatjetPhi_->at(ifj)),binx,biny,binz);
-    //cout<<"bin x bin y "<<binx<<" "<<biny<<endl;
-    //cout<<"content "<<h_fatjets->GetBinContent(binx,biny)<<endl;
+  cone[ifj] = new TEllipse(FatjetEta_->at(ifj),FatjetPhi_->at(ifj), 1.2, 1.2);
+  //  cone[ifj]->SetFillStyle(3003);
+  cone[ifj]->SetFillStyle(0);
+  Int_t binx,biny,binz;
+  h_fatjets->GetBinXYZ(h_fatjets->FindBin(FatjetEta_->at(ifj),FatjetPhi_->at(ifj)),binx,biny,binz);
+  //cout<<"bin x bin y "<<binx<<" "<<biny<<endl;
+  //cout<<"content "<<h_fatjets->GetBinContent(binx,biny)<<endl;
    
-    //cout<<palette<<endl;
-    Int_t ci = palette->GetBinColor(binx,biny);
-    if(ifj==0) ci = palette->GetBinColor(binx,biny);
-    //cout<<"color"<<ci<<endl;
-    cone[ifj]->SetFillColor(kGray);
-    cone[ifj]->SetLineColor(ci);
+  //cout<<palette<<endl;
+  Int_t ci = palette->GetBinColor(binx,biny);
+  if(ifj==0) ci = palette->GetBinColor(binx,biny);
+  //cout<<"color"<<ci<<endl;
+  cone[ifj]->SetFillColor(kGray);
+  cone[ifj]->SetLineColor(ci);
   }
 
 
@@ -320,12 +320,12 @@ float getDR(float eta1, float eta2, float phi1, float phi2)
   nextline=0.76;
   myText(xalign+0.01,nextline,Form("reco #mu p_{T} = %.0f GeV",RA4MusPt_->at(0),kBlack,0.04);
   // myText(xalign+0.07,nextline,Form("%.0f",mus_pt->at(RA4Muon.at(0))),kRed,0.04);
-	 TMarker recomu = TMarker(RA4MusPt_->at(0), mus_phi->at(RA4Muon.at(0)), 27);
+  TMarker recomu = TMarker(RA4MusPt_->at(0), mus_phi->at(RA4Muon.at(0)), 27);
   recomu.SetMarkerSize(4);
   recomu.SetMarkerColor(kRed);
   genpart.push_back(recomu);
   if(truth) myText(xalign,0.68,"Gen  p_{T} [GeV]",1,0.04);
-	  TMarker mumark = TMarker(xalign,nextline,27);
+  TMarker mumark = TMarker(xalign,nextline,27);
   mumark.SetNDC();
   mumark.SetX(xalign);
   mumark.SetY(nextline+0.01);
@@ -370,48 +370,48 @@ float getDR(float eta1, float eta2, float phi1, float phi2)
 
 	
   for(int ij=0;ij<(int)JetPt_->size();ij++){
-    if(JetPt_->at(ij)>30){
-      TMarker jet = TMarker(JetEta_->at(ij),JetPhi_->at(ij),20);
-      jet.SetMarkerSize(1.2);
-      if(JetCSV_->at(ij)>0.814) jet.SetMarkerColor(8);
-      /*for(int ix=0;ix<(int)MediumBJet.size();ix++){
-	if(ij==MediumBJet.at(ix)){
-	  jet.SetMarkerColor(8);
-	  break;
-	}
-	}
-      constituents.push_back(jet);
-    }
+  if(JetPt_->at(ij)>30){
+  TMarker jet = TMarker(JetEta_->at(ij),JetPhi_->at(ij),20);
+  jet.SetMarkerSize(1.2);
+  if(JetCSV_->at(ij)>0.814) jet.SetMarkerColor(8);
+  /*for(int ix=0;ix<(int)MediumBJet.size();ix++){
+  if(ij==MediumBJet.at(ix)){
+  jet.SetMarkerColor(8);
+  break;
+  }
+  }
+  constituents.push_back(jet);
+  }
   }
 
 
   bool drawn=false;
-	 for(int ifj = 0; ifj< (int)fjets.size(); ifj++){
-    vector<fastjet::PseudoJet> cons = fjets[ifj].constituents();
-    for(int ics = 0; ics<(int)cons.size();ics++){
-      for(int ifj2=0; ifj2<(int)fjets.size(); ifj2++){
-	if(ifj2==ifj) continue;
-	TArrow first = TArrow(cons[ics].eta(),cons[ics].phi_std(), fjets[ifj].eta(),fjets[ifj].phi_std(),0.04,">");
-	if(deltaR(cons[ics].eta(),cons[ics].phi_std(), fjets[ifj2].eta(),fjets[ifj2].phi_std()) < 1.25){
-	  //cout<<"type 1 line: con eta phi FJ eta phi"<<cons[ics].eta()<<" "<<cons[ics].phi_std()<<" "<<fjets[ifj2].eta()<<" "<<fjets[ifj2].phi_std()<<endl;
-	  first.DrawArrow(cons[ics].eta(),cons[ics].phi_std(), fjets[ifj].eta(),fjets[ifj].phi_std(),0.0045,"|>");
-	  drawn=true;
-	  break;
-	}
-	else if(deltaR(cons[ics].eta(),cons[ics].phi_std(), fjets[ifj].eta(),fjets[ifj].phi_std()) > 1.15){
-	  //cout<<"type 2 line: con eta phi FJ eta phi"<<cons[ics].eta()<<" "<<cons[ics].phi_std()<<" "<<fjets[ifj].eta()<<" "<<fjets[ifj].phi_std()<<endl;
-	  first.DrawArrow(cons[ics].eta(),cons[ics].phi_std(), fjets[ifj].eta(),fjets[ifj].phi_std(),0.0045,"|>");
-	  drawn=true;
-	  break;}
-      }
-    }
-    cons.clear();
-    }
+  for(int ifj = 0; ifj< (int)fjets.size(); ifj++){
+  vector<fastjet::PseudoJet> cons = fjets[ifj].constituents();
+  for(int ics = 0; ics<(int)cons.size();ics++){
+  for(int ifj2=0; ifj2<(int)fjets.size(); ifj2++){
+  if(ifj2==ifj) continue;
+  TArrow first = TArrow(cons[ics].eta(),cons[ics].phi_std(), fjets[ifj].eta(),fjets[ifj].phi_std(),0.04,">");
+  if(deltaR(cons[ics].eta(),cons[ics].phi_std(), fjets[ifj2].eta(),fjets[ifj2].phi_std()) < 1.25){
+  //cout<<"type 1 line: con eta phi FJ eta phi"<<cons[ics].eta()<<" "<<cons[ics].phi_std()<<" "<<fjets[ifj2].eta()<<" "<<fjets[ifj2].phi_std()<<endl;
+  first.DrawArrow(cons[ics].eta(),cons[ics].phi_std(), fjets[ifj].eta(),fjets[ifj].phi_std(),0.0045,"|>");
+  drawn=true;
+  break;
+  }
+  else if(deltaR(cons[ics].eta(),cons[ics].phi_std(), fjets[ifj].eta(),fjets[ifj].phi_std()) > 1.15){
+  //cout<<"type 2 line: con eta phi FJ eta phi"<<cons[ics].eta()<<" "<<cons[ics].phi_std()<<" "<<fjets[ifj].eta()<<" "<<fjets[ifj].phi_std()<<endl;
+  first.DrawArrow(cons[ics].eta(),cons[ics].phi_std(), fjets[ifj].eta(),fjets[ifj].phi_std(),0.0045,"|>");
+  drawn=true;
+  break;}
+  }
+  }
+  cons.clear();
+  }
 
 
 
-	 }
-}*/
+  }
+  }*/
 
 //
 // per process
@@ -552,37 +552,37 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
 					nbin,xbins);
 
       h1_nBSJ_perFJ[i]= InitTH1F( Form("h1_%s_nBSJ_perFJ_%ifatjet", ChainName.Data(), i), 
-			      Form("h1_%s_nBSJ_perFJ_%ifatjet", ChainName.Data(), i), 
-			      5, -0.5, 4.5);
-       h1_max_nBSJ_perEvent[i]= InitTH1F( Form("h1_%s_max_nBSJ_perEvent_%ifatjet", ChainName.Data(), i), 
-			      Form("h1_%s_max_nBSJ_perEvent_%ifatjet", ChainName.Data(), i), 
-			      5, -0.5, 4.5);
+				  Form("h1_%s_nBSJ_perFJ_%ifatjet", ChainName.Data(), i), 
+				  5, -0.5, 4.5);
+      h1_max_nBSJ_perEvent[i]= InitTH1F( Form("h1_%s_max_nBSJ_perEvent_%ifatjet", ChainName.Data(), i), 
+					 Form("h1_%s_max_nBSJ_perEvent_%ifatjet", ChainName.Data(), i), 
+					 5, -0.5, 4.5);
 
-        h1_sumCSV_perFJ[i]= InitTH1F( Form("h1_%s_sumCSV_perFJ_%ifatjet", ChainName.Data(), i), 
-			      Form("h1_%s_sumCSV_perFJ_%ifatjet", ChainName.Data(), i), 
-			      10, 0, 5);
-       h1_max_sumCSV_perEvent[i]= InitTH1F( Form("h1_%s_max_sumCSV_perEvent_%ifatjet", ChainName.Data(), i), 
-			      Form("h1_%s_max_sumCSV_perEvent_%ifatjet", ChainName.Data(), i), 
-			     10, 0, 5);
+      h1_sumCSV_perFJ[i]= InitTH1F( Form("h1_%s_sumCSV_perFJ_%ifatjet", ChainName.Data(), i), 
+				    Form("h1_%s_sumCSV_perFJ_%ifatjet", ChainName.Data(), i), 
+				    10, 0, 5);
+      h1_max_sumCSV_perEvent[i]= InitTH1F( Form("h1_%s_max_sumCSV_perEvent_%ifatjet", ChainName.Data(), i), 
+					   Form("h1_%s_max_sumCSV_perEvent_%ifatjet", ChainName.Data(), i), 
+					   10, 0, 5);
        
-       h1_mj_BFJ[i]=InitTH1F( Form("h1_%s_mj_BFJ_%ifatjet", ChainName.Data(), i), 
-			   Form("h1_%s_mj_BFJ_%ifatjet", ChainName.Data(), i), 
-			   10, 0, 1000);
+      h1_mj_BFJ[i]=InitTH1F( Form("h1_%s_mj_BFJ_%ifatjet", ChainName.Data(), i), 
+			     Form("h1_%s_mj_BFJ_%ifatjet", ChainName.Data(), i), 
+			     10, 0, 1000);
 
-       h1_MJ_BFJ[i]=InitTH1F( Form("h1_%s_sumMJ_BFJ_%ifatjet", ChainName.Data(), i), 
-			   Form("h1_%s_sumMJ_BFJ_%ifatjet", ChainName.Data(), i), 
-			      20, 0, 2000);
+      h1_MJ_BFJ[i]=InitTH1F( Form("h1_%s_sumMJ_BFJ_%ifatjet", ChainName.Data(), i), 
+			     Form("h1_%s_sumMJ_BFJ_%ifatjet", ChainName.Data(), i), 
+			     20, 0, 2000);
        
-       h1_mj1_BFJ[i]=InitTH1F( Form("h1_%s_mj1_BFJ_%ifatjet", ChainName.Data(), i), 
-			   Form("h1_%s_mj1_BFJ_%ifatjet", ChainName.Data(), i), 
-			   10, 0, 1000);
- h1_mj2_BFJ[i]=InitTH1F( Form("h1_%s_mj2_BFJ_%ifatjet", ChainName.Data(), i), 
-			   Form("h1_%s_mj2_BFJ_%ifatjet", ChainName.Data(), i), 
-			   10, 0, 1000);
+      h1_mj1_BFJ[i]=InitTH1F( Form("h1_%s_mj1_BFJ_%ifatjet", ChainName.Data(), i), 
+			      Form("h1_%s_mj1_BFJ_%ifatjet", ChainName.Data(), i), 
+			      10, 0, 1000);
+      h1_mj2_BFJ[i]=InitTH1F( Form("h1_%s_mj2_BFJ_%ifatjet", ChainName.Data(), i), 
+			      Form("h1_%s_mj2_BFJ_%ifatjet", ChainName.Data(), i), 
+			      10, 0, 1000);
 
-  h1_mj3_BFJ[i]=InitTH1F( Form("h1_%s_mj3_BFJ_%ifatjet", ChainName.Data(), i), 
-			   Form("h1_%s_mj3_BFJ_%ifatjet", ChainName.Data(), i), 
-			   10, 0, 1000);
+      h1_mj3_BFJ[i]=InitTH1F( Form("h1_%s_mj3_BFJ_%ifatjet", ChainName.Data(), i), 
+			      Form("h1_%s_mj3_BFJ_%ifatjet", ChainName.Data(), i), 
+			      10, 0, 1000);
 
 
       
@@ -852,6 +852,7 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
 	  if( TMath::Abs(GenId_->at(igen))!=11 && TMath::Abs(GenId_->at(igen))!=13 && TMath::Abs(GenId_->at(igen))!=15 ) continue;
 	  Ngenlep++;
         }
+      if(manuel) Ngenlep = ((mc_type_&0x0F00)>>8)+(mc_type_&0x000F)-((mc_type_&0x00F0)>>4);
       if(ChainName.Contains("TT_sl") && Ngenlep!=1) continue;  
       if(ChainName.Contains("TT_ll") && Ngenlep!=2) continue;  
       if(ChainName.Contains("TT_sys") && !(Ngenlep==2 || Ngenlep==1)) continue;  
@@ -863,7 +864,7 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
       float dphimin=10.;
       
       for(unsigned int a=0;a<JetPt_->size();a++){
-	if(JetPt_->at(a)>=40. && (!manuel || JetIsLep_->at(a)>=false) && TMath::Abs(JetEta_->at(a))<=2.5){ 
+	if(JetPt_->at(a)>=40. && (!manuel || JetIsLep_->at(a)==false) && TMath::Abs(JetEta_->at(a))<=2.5){ 
 	  HT40+=JetPt_->at(a);
 	  RA4NSJ++;
 	  if(JetCSV_->at(a)>=0.814) {
@@ -878,12 +879,15 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
 	RA4NSJ=Nskinnyjet_;
 	RA4NB=NBtagCSVM_;
       }
+
+     
       //REMOVE THIS
       // RA4NSJ = JetPt_->size();
       //if(HT40<=750 || RA4NB==0) continue;
 	
       int nISR=0;
       if(status)EventWeight_ = EventWeight_*4000.;
+      if(manuel) EventWeight_ /=1000.;
       if(!manuel && EventWeightNeg_<0) EventWeight_*= (-1.0);
       // 
       // weights 
@@ -897,14 +901,34 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
       float ISRpT=0;
       float orig_weight=EventWeight_;
       N_pre_toppT+=EventWeight_;
-      if(ChainName.Contains("TT") && !manuel)
+
+      if(manuel){
+	for(unsigned int igen=0; igen<GenId_->size(); igen++)
+	  { 
+	    if( GenId_->at(igen)==6 ){
+	      top1pT_ = GenPt_->at(igen);
+	      top1Phi_ = GenPhi_->at(igen);
+	      
+	    }
+	    if( GenId_->at(igen)==(-6) ){
+	      top2pT_ = GenPt_->at(igen);
+	      top2Phi_ = GenPhi_->at(igen);
+	      
+	    }
+
+	  }
+
+      }
+
+      
+      if(ChainName.Contains("TT"))
 	{
 	  if(status) nISR = GetnISR();
 	  float ISRpx = top1pT_*TMath::Cos(top1Phi_) + top2pT_*TMath::Cos(top2Phi_);
 	  float ISRpy = top1pT_*TMath::Sin(top1Phi_) + top2pT_*TMath::Sin(top2Phi_);
 	  ISRpT = TMath::Sqrt(ISRpx*ISRpx+ISRpy*ISRpy);
 	}
-      if(ChainName.Contains("TT_sys")&& !manuel)
+      if(ChainName.Contains("TT_sys"))
 	{	
 	  //v1
 	    
@@ -952,7 +976,7 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
 	}
 	
       N_post_toppT+=EventWeight_;
-      if(ChainName.Contains("TT") && !manuel) {
+      if(ChainName.Contains("TT")) {
 	FillTH1F(h1_ttbarpT_incl, ISRpT, EventWeight_);
 	FillTH1F(h1_toppT_incl, top1pT_, EventWeight_);
 	FillTH1F(h1_nISR_incl, nISR, EventWeight_);
@@ -968,9 +992,9 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
       //
       //if(flagged) cout<<"flagged event HT40 NSJ NB RA4mus RA4els RA4musveto RA4elsveto "<<event_<<"   "<<HT40<<"   "<<RA4NSJ<<"   "<<RA4NB<<"   "<<RA4MusPt_->size()<<"   "<<RA4ElsPt_->size()<<"   "<<RA4MusVetoPt_->size()<<"   "<<RA4ElsVetoPt_->size()<<endl;
       if(!manuel && (!(PassNLep(1) || PassNLep(2))))  continue; // need this upfront because of mT calculation
-      if(manuel && ( (nels_+nmus_)<1 || (nels_+nmus_) >2)) continue
-      // Nfatjet, MJ, mj sorting 
-      int Nfatjet_thres = 0;
+      if(manuel && ( (nels_+nmus_)<1 || (nels_+nmus_) >2)) continue;
+							     // Nfatjet, MJ, mj sorting 
+							     int Nfatjet_thres = 0;
       double MJ_thres=0; 
       vector<double> mj_thres_sorted; 
       for(int ifj=0; ifj<(int)FatjetPt_->size(); ifj++)
@@ -990,52 +1014,16 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
       double mT=0;
       double WpT=0;
       if(!manuel){
-      if(PassNLep(1)){
-	if(RA4MusPt_->size()==1) {
-	  mT  = TMath::Sqrt( 2*MET_*RA4MusPt_->at(0)*(1-TMath::Cos(METPhi_-RA4MusPhi_->at(0))) ); 
-	  WpT = TMath::Sqrt(  
-			    (RA4MusPt_->at(0)*TMath::Cos(RA4MusPhi_->at(0)) + MET_*TMath::Cos(METPhi_))
-			    *(RA4MusPt_->at(0)*TMath::Cos(RA4MusPhi_->at(0)) + MET_*TMath::Cos(METPhi_))
-			    +(RA4MusPt_->at(0)*TMath::Sin(RA4MusPhi_->at(0)) + MET_*TMath::Sin(METPhi_))
-			    *(RA4MusPt_->at(0)*TMath::Sin(RA4MusPhi_->at(0)) + MET_*TMath::Sin(METPhi_))  ); 
-	}
-	if(RA4ElsPt_->size()==1) {
-	  mT  = TMath::Sqrt( 2*MET_*RA4ElsPt_->at(0)*(1-TMath::Cos(METPhi_-RA4ElsPhi_->at(0))) ); 
-	  WpT = TMath::Sqrt(  
-			    (RA4ElsPt_->at(0)*TMath::Cos(RA4ElsPhi_->at(0)) + MET_*TMath::Cos(METPhi_))
-			    *(RA4ElsPt_->at(0)*TMath::Cos(RA4ElsPhi_->at(0)) + MET_*TMath::Cos(METPhi_))
-			    +(RA4ElsPt_->at(0)*TMath::Sin(RA4ElsPhi_->at(0)) + MET_*TMath::Sin(METPhi_))
-			    *(RA4ElsPt_->at(0)*TMath::Sin(RA4ElsPhi_->at(0)) + MET_*TMath::Sin(METPhi_))  ); 
-	}
-      }
-
-      else if(PassNLep(2)){
-	if(RA4MusPt_->size()==2) {
-	  mT  = TMath::Sqrt( 2*MET_*RA4MusPt_->at(0)*(1-TMath::Cos(METPhi_-RA4MusPhi_->at(0))) ); 
-	  WpT = TMath::Sqrt(  
-			    (RA4MusPt_->at(0)*TMath::Cos(RA4MusPhi_->at(0)) + MET_*TMath::Cos(METPhi_))
-			    *(RA4MusPt_->at(0)*TMath::Cos(RA4MusPhi_->at(0)) + MET_*TMath::Cos(METPhi_))
-			    +(RA4MusPt_->at(0)*TMath::Sin(RA4MusPhi_->at(0)) + MET_*TMath::Sin(METPhi_))
-			    *(RA4MusPt_->at(0)*TMath::Sin(RA4MusPhi_->at(0)) + MET_*TMath::Sin(METPhi_))  ); 
-	}
-	if(RA4ElsPt_->size()==2) {
-	  mT  = TMath::Sqrt( 2*MET_*RA4ElsPt_->at(0)*(1-TMath::Cos(METPhi_-RA4ElsPhi_->at(0))) ); 
-	  WpT = TMath::Sqrt(  
-			    (RA4ElsPt_->at(0)*TMath::Cos(RA4ElsPhi_->at(0)) + MET_*TMath::Cos(METPhi_))
-			    *(RA4ElsPt_->at(0)*TMath::Cos(RA4ElsPhi_->at(0)) + MET_*TMath::Cos(METPhi_))
-			    +(RA4ElsPt_->at(0)*TMath::Sin(RA4ElsPhi_->at(0)) + MET_*TMath::Sin(METPhi_))
-			    *(RA4ElsPt_->at(0)*TMath::Sin(RA4ElsPhi_->at(0)) + MET_*TMath::Sin(METPhi_))  ); 
-	}
-	  
-	if(RA4MusPt_->size()==1 && RA4ElsPt_->size()==1 ) {
-	  if(RA4MusPt_->at(0) > RA4ElsPt_->at(0)){ mT  = TMath::Sqrt( 2*MET_*RA4MusPt_->at(0)*(1-TMath::Cos(METPhi_-RA4MusPhi_->at(0))) ); 
+	if(PassNLep(1)){
+	  if(RA4MusPt_->size()==1) {
+	    mT  = TMath::Sqrt( 2*MET_*RA4MusPt_->at(0)*(1-TMath::Cos(METPhi_-RA4MusPhi_->at(0))) ); 
 	    WpT = TMath::Sqrt(  
 			      (RA4MusPt_->at(0)*TMath::Cos(RA4MusPhi_->at(0)) + MET_*TMath::Cos(METPhi_))
 			      *(RA4MusPt_->at(0)*TMath::Cos(RA4MusPhi_->at(0)) + MET_*TMath::Cos(METPhi_))
 			      +(RA4MusPt_->at(0)*TMath::Sin(RA4MusPhi_->at(0)) + MET_*TMath::Sin(METPhi_))
 			      *(RA4MusPt_->at(0)*TMath::Sin(RA4MusPhi_->at(0)) + MET_*TMath::Sin(METPhi_))  ); 
 	  }
-	  else{
+	  if(RA4ElsPt_->size()==1) {
 	    mT  = TMath::Sqrt( 2*MET_*RA4ElsPt_->at(0)*(1-TMath::Cos(METPhi_-RA4ElsPhi_->at(0))) ); 
 	    WpT = TMath::Sqrt(  
 			      (RA4ElsPt_->at(0)*TMath::Cos(RA4ElsPhi_->at(0)) + MET_*TMath::Cos(METPhi_))
@@ -1045,7 +1033,43 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
 	  }
 	}
 
-      }
+	else if(PassNLep(2)){
+	  if(RA4MusPt_->size()==2) {
+	    mT  = TMath::Sqrt( 2*MET_*RA4MusPt_->at(0)*(1-TMath::Cos(METPhi_-RA4MusPhi_->at(0))) ); 
+	    WpT = TMath::Sqrt(  
+			      (RA4MusPt_->at(0)*TMath::Cos(RA4MusPhi_->at(0)) + MET_*TMath::Cos(METPhi_))
+			      *(RA4MusPt_->at(0)*TMath::Cos(RA4MusPhi_->at(0)) + MET_*TMath::Cos(METPhi_))
+			      +(RA4MusPt_->at(0)*TMath::Sin(RA4MusPhi_->at(0)) + MET_*TMath::Sin(METPhi_))
+			      *(RA4MusPt_->at(0)*TMath::Sin(RA4MusPhi_->at(0)) + MET_*TMath::Sin(METPhi_))  ); 
+	  }
+	  if(RA4ElsPt_->size()==2) {
+	    mT  = TMath::Sqrt( 2*MET_*RA4ElsPt_->at(0)*(1-TMath::Cos(METPhi_-RA4ElsPhi_->at(0))) ); 
+	    WpT = TMath::Sqrt(  
+			      (RA4ElsPt_->at(0)*TMath::Cos(RA4ElsPhi_->at(0)) + MET_*TMath::Cos(METPhi_))
+			      *(RA4ElsPt_->at(0)*TMath::Cos(RA4ElsPhi_->at(0)) + MET_*TMath::Cos(METPhi_))
+			      +(RA4ElsPt_->at(0)*TMath::Sin(RA4ElsPhi_->at(0)) + MET_*TMath::Sin(METPhi_))
+			      *(RA4ElsPt_->at(0)*TMath::Sin(RA4ElsPhi_->at(0)) + MET_*TMath::Sin(METPhi_))  ); 
+	  }
+	  
+	  if(RA4MusPt_->size()==1 && RA4ElsPt_->size()==1 ) {
+	    if(RA4MusPt_->at(0) > RA4ElsPt_->at(0)){ mT  = TMath::Sqrt( 2*MET_*RA4MusPt_->at(0)*(1-TMath::Cos(METPhi_-RA4MusPhi_->at(0))) ); 
+	      WpT = TMath::Sqrt(  
+				(RA4MusPt_->at(0)*TMath::Cos(RA4MusPhi_->at(0)) + MET_*TMath::Cos(METPhi_))
+				*(RA4MusPt_->at(0)*TMath::Cos(RA4MusPhi_->at(0)) + MET_*TMath::Cos(METPhi_))
+				+(RA4MusPt_->at(0)*TMath::Sin(RA4MusPhi_->at(0)) + MET_*TMath::Sin(METPhi_))
+				*(RA4MusPt_->at(0)*TMath::Sin(RA4MusPhi_->at(0)) + MET_*TMath::Sin(METPhi_))  ); 
+	    }
+	    else{
+	      mT  = TMath::Sqrt( 2*MET_*RA4ElsPt_->at(0)*(1-TMath::Cos(METPhi_-RA4ElsPhi_->at(0))) ); 
+	      WpT = TMath::Sqrt(  
+				(RA4ElsPt_->at(0)*TMath::Cos(RA4ElsPhi_->at(0)) + MET_*TMath::Cos(METPhi_))
+				*(RA4ElsPt_->at(0)*TMath::Cos(RA4ElsPhi_->at(0)) + MET_*TMath::Cos(METPhi_))
+				+(RA4ElsPt_->at(0)*TMath::Sin(RA4ElsPhi_->at(0)) + MET_*TMath::Sin(METPhi_))
+				*(RA4ElsPt_->at(0)*TMath::Sin(RA4ElsPhi_->at(0)) + MET_*TMath::Sin(METPhi_))  ); 
+	    }
+	  }
+
+	}
       }
       if(manuel) mT = mt_;
       //
@@ -1087,7 +1111,7 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
 	int nHT=0;
 	if(HT40>750) nHT=1;
 
-	float lepbin;
+	float lepbin=-1;
 	if(PassNLep(1) && RA4ElsPt_->size()==1) lepbin = 0.5;
 	if(PassNLep(1) && RA4MusPt_->size()==1) lepbin = 1.5;
 	if(PassNLep(2)) lepbin=2.5;
@@ -1097,7 +1121,7 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
 
 	   
       if( !PassSelection(Region, HT40, MET_, RA4NB, RA4NSJ, mT, MJ_thres,ChainName,Ngenlep)) continue;
-	
+      //cout<<"Passed Selection"<<endl;
 	
       //     
       // ttbar gen composition  
@@ -1106,6 +1130,7 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
       int Nm=0;
       int Nt=0;
       int Ntn=0; int Nen=0; int Nmn=0;
+      if(!manuel){
       for(unsigned int igen=0; igen<GenId_->size(); igen++)
 	{ 
 	  if( TMath::Abs(GenMId_->at(igen))==24 && TMath::Abs(GenId_->at(igen))==11 ) Ne++;
@@ -1121,8 +1146,8 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
       if( Nt==2 )                                                                 Ntt  = Ntt + EventWeight_; 
       if( (Ne==1 || Nm==1) && Nt==1 && (Ntn==1 && (Nen==1 || Nmn==1)) )           Nltl = Nltl + EventWeight_; 
       if( (Ne==1 || Nm==1) && Nt==1 && (Ntn==1 && (Nen==0 && Nmn==0)) )           Nlth = Nlth + EventWeight_; 
-	
-      if(ChainName.Contains("TT") && !manuel) {
+      }
+      if(ChainName.Contains("TT")) {
 	FillTH1FAll(h1_toppT1, NFJbin, top1pT_, EventWeight_);
 	FillTH1FAll(h1_toppT2, NFJbin, top2pT_, EventWeight_);
 	FillTH1FAll(h1_nISR, NFJbin, nISR, EventWeight_);
@@ -1139,16 +1164,17 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
       if(!manuel){
 
 	if(RA4ElsPt_->size()==1) FillTH1FAll(h1_yields, NFJbin, 0.5, EventWeight_);   
-      if(RA4MusPt_->size()==1) FillTH1FAll(h1_yields, NFJbin, 1.5, EventWeight_);
+	if(RA4MusPt_->size()==1) FillTH1FAll(h1_yields, NFJbin, 1.5, EventWeight_);
       }
       if(manuel){
 	if(nels_==1) FillTH1FAll(h1_yields, NFJbin, 0.5, EventWeight_);   
 	if(nmus_==1) FillTH1FAll(h1_yields, NFJbin, 1.5, EventWeight_);
       }
+      //cout<<"filled yields"<<endl;
       //if(NFJbin==5 && ChainName.Contains("TT_ll") ) eventlist.push_back(event_);
         
       // plots
-      if(RA4MusPt_->size()==1 && !manuel) {
+      if(!manuel && RA4MusPt_->size()==1 ) {
 	FillTH1FAll(h1_muspT,   NFJbin,  RA4MusPt_->at(0),  EventWeight_); 
 	FillTH1FAll(h1_musEta,  NFJbin, RA4MusEta_->at(0), EventWeight_); 
 	FillTH1FAll(h1_musPhi,  NFJbin, RA4MusPhi_->at(0), EventWeight_); 
@@ -1157,7 +1183,7 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
 	    FillTH1FAll(h1_muspTminusMET, NFJbin, (MET_-RA4MusPt_->at(0))/RA4MusPt_->at(0), EventWeight_);   
 	  }
       }
-      if(RA4ElsPt_->size()==1 && !manuel) {
+      if( !manuel && RA4ElsPt_->size()==1 ) {
 	FillTH1FAll(h1_elspT, NFJbin, RA4ElsPt_->at(0), EventWeight_);   
 	FillTH1FAll(h1_elsEta, NFJbin, RA4ElsEta_->at(0), EventWeight_); 
 	FillTH1FAll(h1_elsPhi, NFJbin, RA4ElsPhi_->at(0), EventWeight_); 
@@ -1180,48 +1206,48 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
       float m2_BFJ = -1;
       float m3_BFJ = -1;
       float MJ_BFJ=0;
-      if(!manuel){
-      for(int ifj=0; ifj<(int)FatjetPt_->size(); ifj++)
-	{   
-	  if(FatjetPt_->at(ifj)<FatjetpTthres) continue; 
-	  if(mj_->at(ifj)<mjthres) continue;
-	  int nBSJ=0;
-	  float sumCSV=0.0;
-	  float fjeta = FatjetEta_->at(ifj);
-	  float fjphi = FatjetPhi_->at(ifj);
-	  for(unsigned int isj=0;isj<JetPt_->size();isj++){
-	    if(JetPt_->at(isj)<30) continue;
-	    if(getDR(fjeta, JetEta_->at(isj), fjphi, JetPhi_->at(isj)) < 1.2)
-	      {
-		float CSV = JetCSV_->at(isj);
-		if(CSV>0) {sumCSV+=CSV;
-		  if(CSV>0.814) nBSJ++;
+    
+	for(int ifj=0; ifj<(int)FatjetPt_->size(); ifj++)
+	  {   
+	    if(FatjetPt_->at(ifj)<FatjetpTthres) continue; 
+	    if(mj_->at(ifj)<mjthres) continue;
+	    int nBSJ=0;
+	    float sumCSV=0.0;
+	    float fjeta = FatjetEta_->at(ifj);
+	    float fjphi = FatjetPhi_->at(ifj);
+	    for(unsigned int isj=0;isj<JetPt_->size();isj++){
+	      if(JetPt_->at(isj)<30) continue;
+	      if(getDR(fjeta, JetEta_->at(isj), fjphi, JetPhi_->at(isj)) < 1.2)
+		{
+		  float CSV = JetCSV_->at(isj);
+		  if(CSV>0) {sumCSV+=CSV;
+		    if(CSV>0.814) nBSJ++;
+		  }
 		}
-	      }
-	  }
-	  if(sumCSV>max_sumCSV) max_sumCSV = sumCSV;
-	  if(nBSJ>max_nBSJ) max_nBSJ = nBSJ;
-	  if(nBSJ>0){
-	    FillTH1FAll(h1_mj_BFJ, NFJbin, mj_->at(ifj), EventWeight_);
-	    MJ_BFJ+= mj_->at(ifj);
+	    }
+	    if(sumCSV>max_sumCSV) max_sumCSV = sumCSV;
+	    if(nBSJ>max_nBSJ) max_nBSJ = nBSJ;
+	    if(nBSJ>0){
+	      FillTH1FAll(h1_mj_BFJ, NFJbin, mj_->at(ifj), EventWeight_);
+	      MJ_BFJ+= mj_->at(ifj);
 
-	    if(mj_->at(ifj) > m1_BFJ){ m3_BFJ=m2_BFJ; m2_BFJ = m1_BFJ; m1_BFJ = mj_->at(ifj); }
-	    else if(mj_->at(ifj) > m2_BFJ){m3_BFJ=m2_BFJ; m2_BFJ = mj_->at(ifj);}
-	    else if(mj_->at(ifj) > m3_BFJ) m3_BFJ=mj_->at(ifj);
-	  }
+	      if(mj_->at(ifj) > m1_BFJ){ m3_BFJ=m2_BFJ; m2_BFJ = m1_BFJ; m1_BFJ = mj_->at(ifj); }
+	      else if(mj_->at(ifj) > m2_BFJ){m3_BFJ=m2_BFJ; m2_BFJ = mj_->at(ifj);}
+	      else if(mj_->at(ifj) > m3_BFJ) m3_BFJ=mj_->at(ifj);
+	    }
 
-	  FillTH1FAll(h1_nBSJ_perFJ, NFJbin, nBSJ, EventWeight_);
-	  FillTH1FAll(h1_sumCSV_perFJ, NFJbin, sumCSV, EventWeight_);
+	    FillTH1FAll(h1_nBSJ_perFJ, NFJbin, nBSJ, EventWeight_);
+	    FillTH1FAll(h1_sumCSV_perFJ, NFJbin, sumCSV, EventWeight_);
 
 	  
-	}
-      FillTH1FAll(h1_mj1_BFJ, NFJbin, m1_BFJ, EventWeight_);
-      FillTH1FAll(h1_mj2_BFJ, NFJbin, m2_BFJ, EventWeight_);
-      FillTH1FAll(h1_mj3_BFJ, NFJbin, m3_BFJ, EventWeight_);
-      FillTH1FAll(h1_MJ_BFJ, NFJbin, MJ_BFJ, EventWeight_);
-      FillTH1FAll(h1_max_nBSJ_perEvent, NFJbin, max_nBSJ, EventWeight_);
-      FillTH1FAll(h1_max_sumCSV_perEvent, NFJbin, max_sumCSV, EventWeight_);
-      }
+	  }
+	FillTH1FAll(h1_mj1_BFJ, NFJbin, m1_BFJ, EventWeight_);
+	FillTH1FAll(h1_mj2_BFJ, NFJbin, m2_BFJ, EventWeight_);
+	FillTH1FAll(h1_mj3_BFJ, NFJbin, m3_BFJ, EventWeight_);
+	FillTH1FAll(h1_MJ_BFJ, NFJbin, MJ_BFJ, EventWeight_);
+	FillTH1FAll(h1_max_nBSJ_perEvent, NFJbin, max_nBSJ, EventWeight_);
+	FillTH1FAll(h1_max_sumCSV_perEvent, NFJbin, max_sumCSV, EventWeight_);
+      
       
 
       if(NFJbin>1) FillTH2FAll(h2_mj1vsmj2, NFJbin, mj_thres_sorted.at(0), mj_thres_sorted.at(1), EventWeight_);           
@@ -1238,7 +1264,7 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
       FillTH1FAll(h1_HT, NFJbin, HT40, EventWeight_);   
       FillTH1FAll(h1_MJ, NFJbin, MJ_thres, EventWeight_);
       FillTH1FAll(h1_MJ_coarse, NFJbin, MJ_thres, EventWeight_);
-
+      // cout<<"filled 2d hists"<<endl;
       if(ChainName.Contains("TT_sys") ){
 	if(MJ_thres<0) cout<<"MJ IS LESS THAN ZERO"<<endl;
 	int jbin = h1_MJ_coarse[NFJbin]->FindBin(MJ_thres)-1 ;

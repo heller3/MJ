@@ -9,7 +9,7 @@ void DoAnalysis(bool OnlyDraw=false)
   // Load macros
 
   // gROOT->LoadMacro("Definitions.h");
-  gROOT->LoadMacro("MakeHists.C+");
+  gROOT->LoadMacro("MakeHists.C++");
   gROOT->LoadMacro("Make1DPlots.C+");
   gROOT->LoadMacro("MakeSF.C+");
   gROOT->LoadMacro("Make2DPlots.C+");
@@ -39,7 +39,7 @@ void DoAnalysis(bool OnlyDraw=false)
   
   //TString BabyDir = "/Users/heller/Jae/ntuples/Phys14_13_Apr2015/";
 
-    //"/Users/heller/Jae/ntuples/JetPt20_04April_NoSkim/";
+  //"/Users/heller/Jae/ntuples/JetPt20_04April_NoSkim/";
 
   //"/Users/heller/Jae/ntuples/HT750MET250_JetPt20_04April/";
   //"/Users/heller/Jae/ntuples/HT750MET250_JetPt20/";
@@ -54,21 +54,21 @@ void DoAnalysis(bool OnlyDraw=false)
   //ch_data->Add(BabyDir+"baby_MuHad_*.root");                            
     
   // TT 
-  ch_ttbar_sl->Add(BabyDir+"baby_TTJets*.root");
-  ch_ttbar_ll->Add(BabyDir+"baby_TTJets*.root");
-  ch_ttbar_sys->Add(BabyDir+"baby_TTJets*.root"); 
+  ch_ttbar_sl->Add(BabyDir+"*_TTJets*.root");
+  ch_ttbar_ll->Add(BabyDir+"*_TTJets*.root");
+  ch_ttbar_sys->Add(BabyDir+"*_TTJets*.root"); 
   // WJets 
-  //ch_wjets->Add(BabyDir+"baby_WJetsToLNu*f1To*.root");
-  ch_wjets->Add(BabyDir+"baby_WJetsToLNu*.root");
+  //ch_wjets->Add(BabyDir+"*_WJetsToLNu*f1To*.root");
+  ch_wjets->Add(BabyDir+"*_WJetsToLNu*.root");
   // DY 
-  //ch_dy->Add(BabyDir+"baby_DYJetsToLL*f1To*.root");
-  ch_dy->Add(BabyDir+"baby_DYJetsToLL*.root");
+  //ch_dy->Add(BabyDir+"*_DYJetsToLL*f1To*.root");
+  ch_dy->Add(BabyDir+"*_DYJetsToLL*.root");
   // Singla top 
-  ch_t->Add(BabyDir+"baby_*channel*_f*.root");
+  ch_t->Add(BabyDir+"*_*channel*_f*.root");
 
   // Signal
-  ch_f1500_100->Add(BabyDir+"baby_*mGl-1500_mLSP-100*.root");
-  ch_f1200_800->Add(BabyDir+"baby_*mGl-1200_mLSP-800*.root");
+  ch_f1500_100->Add(BabyDir+"*_*mGl-1500_mLSP-100*.root");
+  ch_f1200_800->Add(BabyDir+"*_*mGl-1200_mLSP-800*.root");
     
     
   // ----------------------------------------
@@ -240,11 +240,11 @@ void DoAnalysis(bool OnlyDraw=false)
       }
   }//for(int iregion=0; iregion<2; iregion++)
   /*OverlaySF_TT(1,sysname[0]);
-  OverlaySF_TT(1,sysname[1]);
-  OverlaySF_TT(1,sysname[2]);
-  OverlaySF_TT(2,sysname[0]);
-  OverlaySF_TT(2,sysname[1]);
-  OverlaySF_TT(2,sysname[2]);*/
+    OverlaySF_TT(1,sysname[1]);
+    OverlaySF_TT(1,sysname[2]);
+    OverlaySF_TT(2,sysname[0]);
+    OverlaySF_TT(2,sysname[1]);
+    OverlaySF_TT(2,sysname[2]);*/
   // GetYields();
   gSystem->Exec(Form("cp DoAnalysis.C Out/%s_v%i/",study.Data(),version));
   gSystem->Exec(Form("cp Configuration.h Out/%s_v%i/",study.Data(),version));
