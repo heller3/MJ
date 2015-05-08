@@ -13,7 +13,7 @@
 #include "TGraphErrors.h"
 
 #include "Configuration.h"
-#include "babytree_manuel.h"
+#include "babytree_mi.h"
 #include "PassSelection.h"
 
 using namespace std;
@@ -471,7 +471,11 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
   TH1F *h1_MJ_coarse[7];
   Float_t xbins[] = {0,200,300,400,500,600,2000};
   const int nbin = 6;
+  TH1F *h1_MJ_coarse2[7];
+  Float_t xbins2[] = {0,200,300,400,500,2000};
+  const int nbin2 = 5;
   TH1F* h1_MJ_weights_by_bin[7][nbin];
+  TH1F* h1_MJ_weights_by_bin2[7][nbin2];
 
 
 
@@ -543,13 +547,21 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
 						 Form("h1_%s_MJ_weights_by_bin_%ifatjet_bin%i", ChainName.Data(), i, j), 
 						 6,-3,3);
 	}
+	for(int j=0;j<nbin2; j++){
+	  h1_MJ_weights_by_bin2[i][j] = InitTH1F( Form("h1_%s_MJ_weights_by_bin2_%ifatjet_bin%i", ChainName.Data(), i, j), 
+						 Form("h1_%s_MJ_weights_by_bin2_%ifatjet_bin%i", ChainName.Data(), i, j), 
+						 6,-3,3);
+	}
       }
 	
 	
 	
       h1_MJ_coarse[i] = InitTH1FVarBin( Form("h1_%s_MJ_coarse_%ifatjet", ChainName.Data(), i), 
-					Form("h1_%s_MJ_%ifatjet", ChainName.Data(), i), 
+					Form("h1_%s_MJ_coarse_%ifatjet", ChainName.Data(), i), 
 					nbin,xbins);
+      h1_MJ_coarse2[i] = InitTH1FVarBin( Form("h1_%s_MJ_coarse2_%ifatjet", ChainName.Data(), i), 
+					Form("h1_%s_MJ_coarse2_%ifatjet", ChainName.Data(), i), 
+					nbin2,xbins2);
 
       h1_nBSJ_perFJ[i]= InitTH1F( Form("h1_%s_nBSJ_perFJ_%ifatjet", ChainName.Data(), i), 
 				  Form("h1_%s_nBSJ_perFJ_%ifatjet", ChainName.Data(), i), 
@@ -886,7 +898,7 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
       //if(HT40<=750 || RA4NB==0) continue;
 	
       int nISR=0;
-      if(status)EventWeight_ = EventWeight_*4000.;
+      if(status)EventWeight_ = EventWeight_*lumi*1000.;
       if(manuel) EventWeight_ /=1000.;
       if(!manuel && EventWeightNeg_<0) EventWeight_*= (-1.0);
       // 
@@ -1264,6 +1276,7 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
       FillTH1FAll(h1_HT, NFJbin, HT40, EventWeight_);   
       FillTH1FAll(h1_MJ, NFJbin, MJ_thres, EventWeight_);
       FillTH1FAll(h1_MJ_coarse, NFJbin, MJ_thres, EventWeight_);
+      FillTH1FAll(h1_MJ_coarse2, NFJbin, MJ_thres, EventWeight_);
       // cout<<"filled 2d hists"<<endl;
       if(ChainName.Contains("TT_sys") ){
 	if(MJ_thres<0) cout<<"MJ IS LESS THAN ZERO"<<endl;
@@ -1271,6 +1284,11 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
 	if(jbin<0 || jbin >= nbin) cout<<"jbin out of range."<<endl;
 	h1_MJ_weights_by_bin[NFJbin][jbin]->Fill(EventWeight_/orig_weight, orig_weight);
 	h1_MJ_weights_by_bin[6][jbin]->Fill(EventWeight_/orig_weight, orig_weight);
+
+	int jbin2 = h1_MJ_coarse2[NFJbin]->FindBin(MJ_thres)-1 ;
+	if(jbin2<0 || jbin2 >= nbin2) cout<<"jbin2 out of range."<<endl;
+	h1_MJ_weights_by_bin2[NFJbin][jbin2]->Fill(EventWeight_/orig_weight, orig_weight);
+	h1_MJ_weights_by_bin2[6][jbin2]->Fill(EventWeight_/orig_weight, orig_weight);
       }
 
 
@@ -1362,7 +1380,7 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
   cout<<"TOP PT REWEIGHT pre: "<<N_pre_toppT<<"   post: "<<N_post_toppT<<"    Ratio: "<<ptscale<<endl;
 
   //make tgraph to output SF/unc
-  TGraphErrors* g1_SF_mc[7];
+  TGraphErrors* g1_SF_mc[7],*g2_SF_mc[7];
   if(ChainName.Contains("TT_sys")){
     for(int ifj=0; ifj<7; ifj++){ 
       Double_t x[nbin],ex[nbin],y[nbin],ey[nbin];
@@ -1373,7 +1391,17 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
 	ey[i] = h1_MJ_weights_by_bin[ifj][i]->GetMeanError();
       }
       g1_SF_mc[ifj] = new TGraphErrors(nbin,x,y,ex,ey);
-      g1_SF_mc[ifj]->SetName(Form("%s_mcSF_%i",ChainName.Data(),ifj));
+      g1_SF_mc[ifj]->SetName(Form("%s_mcSF1_%i",ChainName.Data(),ifj));
+
+      Double_t x2[nbin2],ex2[nbin2],y2[nbin2],ey2[nbin2];
+      for(int ii=0;ii<nbin2;ii++){
+	x2[ii] = h1_MJ_coarse2[ifj]->GetBinCenter(ii+1);
+	ex2[ii] = 0.5*h1_MJ_coarse2[ifj]->GetBinWidth(ii+1);	
+	y2[ii] = h1_MJ_weights_by_bin2[ifj][ii]->GetMean();
+	ey2[ii] = h1_MJ_weights_by_bin2[ifj][ii]->GetMeanError();
+      }
+      g2_SF_mc[ifj] = new TGraphErrors(nbin2,x2,y2,ex2,ey2);
+      g2_SF_mc[ifj]->SetName(Form("%s_mcSF2_%i",ChainName.Data(),ifj));
     }
   }
     
@@ -1391,7 +1419,7 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
   h1_ttbarpT_incl->SetDirectory(0);                      h1_ttbarpT_incl->Write();
   for(int i=0; i<7; i++)  
     {
-      if(ChainName.Contains("TT_sys")){ g1_SF_mc[i]->Write();}
+      if(ChainName.Contains("TT_sys")){ g1_SF_mc[i]->Write();g2_SF_mc[i]->Write();}
       if(ChainName.Contains("baseline")){
 	for(int nMJ=0;nMJ<2;nMJ++){
 	  for(int nMET=0;nMET<3;nMET++){
@@ -1432,6 +1460,7 @@ void MakeHists(TChain *ch, char* Region, char* sys=(char*)"")
       h1_yields[i]->SetDirectory(0);                      h1_yields[i]->Write();
       h1_MJ[i]->SetDirectory(0);                          h1_MJ[i]->Write();
       h1_MJ_coarse[i]->SetDirectory(0);                   h1_MJ_coarse[i]->Write();
+      h1_MJ_coarse2[i]->SetDirectory(0);                  h1_MJ_coarse2[i]->Write();
       h1_HT[i]->SetDirectory(0);                          h1_HT[i]->Write();
       h1_toppT[i]->SetDirectory(0);                       h1_toppT[i]->Write();
       h1_nISR[i]->SetDirectory(0);                        h1_nISR[i]->Write();

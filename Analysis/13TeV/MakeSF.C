@@ -32,6 +32,8 @@ void MakeSF(char* Region, TString HistName, char* sys, bool fluctuate=false)
   if(syst.Contains("ISRpT")) axistitle = "ISR pT SF";
   if(syst.Contains("nISR")) axistitle = "nISR SF";
 
+  int gnum=1;
+  if(HistName.Contains("MJ_coarse2")) gnum=2; 
   //TString HistName = "MJ";
   TH1F *h1_DATA[7], *h1_T[7], *h1_TT_sl[7], *h1_TT_ll[7], *h1_TT_sys[7], *h1_TT[7], *h1_WJets[7], *h1_DY[7]; 
   TH1F *h1_f1500_100[7], *h1_f1200_800[7];
@@ -50,7 +52,7 @@ void MakeSF(char* Region, TString HistName, char* sys, bool fluctuate=false)
     h1_DY[i]        = (TH1F*)HistFile->Get(Form("h1_DY_%s_%s_%ifatjet", Region,HistName.Data(), i)); 
     h1_f1500_100[i] = (TH1F*)HistFile->Get(Form("h1_T1tttt_f1500_100_%s_%s_%ifatjet", Region,HistName.Data(), i)); 
     h1_f1200_800[i] = (TH1F*)HistFile->Get(Form("h1_T1tttt_f1200_800_%s_%s_%ifatjet",Region, HistName.Data(), i)); 
-    g1_SF_mc[i] = (TGraphErrors*)HistFile->Get(Form("%s_%s%s_mcSF_%i","TT_sys",Region,sys,i));
+    g1_SF_mc[i] = (TGraphErrors*)HistFile->Get(Form("%s_%s%s_mcSF%i_%i","TT_sys",Region,sys,gnum,i));
     g1_SF_mc[i]->SetLineColor(kBlue);
 
 
@@ -93,7 +95,7 @@ void MakeSF(char* Region, TString HistName, char* sys, bool fluctuate=false)
 	}
 
 
-	h1_DATA[i]->Sumw2();
+	//h1_DATA[i]->Sumw2();
 	h1_DATA[i]->Add(h1_WJets[i],-1);
         h1_DATA[i]->Add(h1_T[i],-1);
         h1_DATA[i]->Add(h1_DY[i],-1);
@@ -189,7 +191,7 @@ void MakeSF(char* Region, TString HistName, char* sys, bool fluctuate=false)
 	 // CMS Labels 
         float textSize = 0.04;
 
-        TLatex *TexEnergyLumi = new TLatex(0.9,0.92,Form("#sqrt{s}=13 TeV, L = %i fb^{-1}", 4));
+        TLatex *TexEnergyLumi = new TLatex(0.9,0.92,Form("#sqrt{s}=13 TeV, L = %.0f fb^{-1}", lumi));
         TexEnergyLumi->SetNDC();
         TexEnergyLumi->SetTextSize(textSize);
         TexEnergyLumi->SetTextAlign (31);

@@ -31,6 +31,7 @@
     vector<float>   *JetEta_;
     vector<float>   *JetPhi_;
     vector<float>   *JetCSV_;
+    vector<float>   *JetIsLep_;
     vector<float>   *RA4MusVetoPt_;
     vector<float>   *RA4ElsVetoPt_;
     vector<float>   *GenId_;
@@ -41,6 +42,13 @@ vector<float>   *GenPt_;
 vector<float>   *GenEta_;
 vector<float>   *GenPhi_;
 //vector<float>   *GenE_;
+int nels_;
+int nmus_;
+int nvels_;
+int nvmus_;
+float  mt_;
+unsigned int  mc_type_;
+
 
     bool        TrigMuon_;
     bool        TrigSingleMuon_;

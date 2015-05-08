@@ -108,6 +108,7 @@ void Make1DPlots(TString HistName, char* Region,  bool DoLog=1,bool fluctuate=fa
     if(HistName=="ttbarpT_incl")              	var=(char*)"ttbar system p_{T} [GeV]"; 
     if(HistName=="MJ")                  	var=(char*)"M_{J} [GeV]";
     if(HistName=="MJ_coarse")                  	var=(char*)"M_{J} [GeV]";
+    if(HistName=="MJ_coarse2")                  var=(char*)"M_{J} [GeV]";
     if(HistName=="MJ_corr1")                  	var=(char*)"M_{J} [GeV]";  
     if(HistName=="MJ_corr2")                  	var=(char*)"M_{J} [GeV]";
     if(HistName=="MJ_corr1_coarse")            	var=(char*)"M_{J} [GeV]";  
@@ -135,6 +136,7 @@ void Make1DPlots(TString HistName, char* Region,  bool DoLog=1,bool fluctuate=fa
     // bool corr2=false;
     bool corr=false;
     bool coarse = false;
+    bool coarse2 =false;
     TString c_region[2] = {"1BCRincl","1B4SJCRincl"};
     /*char* Regions[] = {"1BCRincl","1B4SJCRincl","SRincl"};
       int nregion = 3;
@@ -146,6 +148,9 @@ void Make1DPlots(TString HistName, char* Region,  bool DoLog=1,bool fluctuate=fa
     // int nregion =2;
  
     TString corr_region = "";
+    if(HistName.Contains("coarse2")){
+      coarse2=true;
+    }
     if(HistName.Contains("coarse")){
       coarse=true;
       }
@@ -165,8 +170,11 @@ void Make1DPlots(TString HistName, char* Region,  bool DoLog=1,bool fluctuate=fa
       corr2=true;
       HistName="MJ";
       }*/
-    if(corr && coarse){
+    if(corr && coarse && !coarse2){
 	HistName+="_coarse";
+    }
+    if(corr && coarse2){
+	HistName+="_coarse2";
     }
     TString syst = Form("%s",sys);
     if(syst=="") doData=false;
@@ -375,7 +383,7 @@ void Make1DPlots(TString HistName, char* Region,  bool DoLog=1,bool fluctuate=fa
         // CMS Labels 
         float textSize = 0.04;
 
-        TLatex *TexEnergyLumi = new TLatex(0.9,0.92,Form("#sqrt{s}=13 TeV, L = %i fb^{-1}", 4));
+        TLatex *TexEnergyLumi = new TLatex(0.9,0.92,Form("#sqrt{s}=13 TeV, L = %.0f fb^{-1}", lumi));
         TexEnergyLumi->SetNDC();
         TexEnergyLumi->SetTextSize(textSize);
         TexEnergyLumi->SetTextAlign (31);
@@ -413,6 +421,6 @@ void Make1DPlots(TString HistName, char* Region,  bool DoLog=1,bool fluctuate=fa
     // 
     HistFile->Close();
     delete c;
-    cout<<"finished 1D"<<endl;
+    // cout<<"finished 1D"<<endl;
 
 }

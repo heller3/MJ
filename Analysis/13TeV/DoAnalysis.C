@@ -9,7 +9,7 @@ void DoAnalysis(bool OnlyDraw=false)
   // Load macros
 
   // gROOT->LoadMacro("Definitions.h");
-  gROOT->LoadMacro("MakeHists.C++");
+  gROOT->LoadMacro("MakeHists.C+");
   gROOT->LoadMacro("Make1DPlots.C+");
   gROOT->LoadMacro("MakeSF.C+");
   gROOT->LoadMacro("Make2DPlots.C+");
@@ -17,6 +17,7 @@ void DoAnalysis(bool OnlyDraw=false)
   gROOT->LoadMacro("MakeTables_all.C+");
   gROOT->LoadMacro("OverlaySF_TT.C+");
   gROOT->LoadMacro("GetYields.C+");
+  gROOT->LoadMacro("Fluctuate.C+");
   //char* sysname[] = {"_nISR",/*"_toppT1","_toppT2","_ISRpT1","_ISRpT2",*/"_ISRpT3","_ISRpT4"};
   //int nsys=3;
   // if(!status) nsys=1;
@@ -134,6 +135,8 @@ void DoAnalysis(bool OnlyDraw=false)
 	//	MakeSF(Regions[iregion],"MJ",sysname[isys]);
 	MakeSF(Regions[iregion],"MJ_coarse",sysname[isys]);
 	MakeSF(Regions[iregion],"MJ_coarse",sysname[isys],true);
+	MakeSF(Regions[iregion],"MJ_coarse2",sysname[isys]);
+	MakeSF(Regions[iregion],"MJ_coarse2",sysname[isys],true);
       }
     }
 
@@ -155,7 +158,7 @@ void DoAnalysis(bool OnlyDraw=false)
 	  //Make1DPlots("HT",           Regions[iregion],bo,false,sysname[isys]);
 	  //Make1DPlots("MJ",           Regions[iregion],bo,false,sysname[isys]);
 	  Make1DPlots("MJ_coarse",           Regions[iregion],bo,false,sysname[isys]);
-	  Make1DPlots("MJ_coarse",           Regions[iregion],bo,false,sysname[isys]);
+	  Make1DPlots("MJ_coarse2",           Regions[iregion],bo,false,sysname[isys]);
 	  Make1DPlots("Nfatjet",      Regions[iregion],bo,false,sysname[isys]);
 	  Make1DPlots("mj1",          Regions[iregion],bo,false,sysname[isys]);
 
@@ -163,6 +166,9 @@ void DoAnalysis(bool OnlyDraw=false)
 	  if(iregion> SRthres){
 	    for(int icorr=0;icorr<=SRthres;icorr++){
 	      Make1DPlots(Form("MJ_coarse_corr%i",icorr), Regions[iregion],bo,false,sysname[isys]);
+	      Make1DPlots(Form("MJ_coarse2_corr%i",icorr), Regions[iregion],bo,false,sysname[isys]);
+	      Fluctuate(Regions[icorr], Regions[iregion], "MJ_coarse", sysname[isys], 1000000);
+	      Fluctuate(Regions[icorr], Regions[iregion], "MJ_coarse2", sysname[isys], 1000000);
 	      // Make1DPlots(Form("MJ_corr%i",icorr),  Regions[iregion],bo,false,sysname[isys]);
 	    }
 	  }
@@ -245,7 +251,7 @@ void DoAnalysis(bool OnlyDraw=false)
     OverlaySF_TT(2,sysname[0]);
     OverlaySF_TT(2,sysname[1]);
     OverlaySF_TT(2,sysname[2]);*/
-  // GetYields();
+  GetYields();
   gSystem->Exec(Form("cp DoAnalysis.C Out/%s_v%i/",study.Data(),version));
   gSystem->Exec(Form("cp Configuration.h Out/%s_v%i/",study.Data(),version));
   gSystem->Exec(Form("cp MakeHists.C Out/%s_v%i/",study.Data(),version));
@@ -257,4 +263,6 @@ void DoAnalysis(bool OnlyDraw=false)
   gSystem->Exec(Form("cp PassSelection.h Out/%s_v%i/",study.Data(),version));
   gSystem->Exec(Form("cp OverlaySF.C Out/%s_v%i/",study.Data(),version));
   gSystem->Exec(Form("cp babytree_mi.h Out/%s_v%i/",study.Data(),version));
+  gSystem->Exec(Form("cp babytree_manuel.h Out/%s_v%i/",study.Data(),version));
+  gSystem->Exec(Form("cp Fluctuate.C Out/%s_v%i/",study.Data(),version));
 }

@@ -11,10 +11,20 @@ bool PassNLep(unsigned int Nlep)
   for(unsigned int i=0;i<RA4ElsVetoPt_->size();i++){
     if(RA4ElsVetoPt_->at(i)>10) nveto++;
     }*/
-  if(!manuel){if( (RA4MusPt_->size()+RA4ElsPt_->size())==Nlep && RA4MusVetoPt_->size()==0 
-     && RA4ElsVetoPt_->size()==0 ) return true;
+  if(!manuel){if( (RA4MusPt_->size()+RA4ElsPt_->size())==Nlep /* && RA4MusVetoPt_->size()==0 
+								 && RA4ElsVetoPt_->size()==0*/ ) return true;
     else return false;}
   if(manuel) return (nels_+nmus_)==static_cast<int>(Nlep);
+       
+}
+
+bool PassNLepExcl(unsigned int Nlep)
+{
+   
+ if(!manuel){if( (RA4MusPt_->size()+RA4ElsPt_->size())==Nlep  && RA4MusVetoPt_->size()==0 
+								 && RA4ElsVetoPt_->size()==0 ) return true;
+    else return false;}
+ if(manuel) return ((nels_+nmus_)==static_cast<int>(Nlep) && nvels_==0 && nvmus_==0);
        
 }
 
@@ -70,6 +80,21 @@ bool PassSelection(TString Region,
        &&(RA4MusPt_->size())
        ) passed =true;
 
+    if(Region=="lowmTCR" && PassNLepExcl(1) 
+       && HT>500
+       && MET>250
+       && (Nb==1 || Nb==2)
+       && Njet > 5
+       && mT<150
+       ) passed=true;
+
+    if(Region=="lowmTlowMETCR" && PassNLepExcl(1) 
+       && HT>500
+       && MET>200
+       && (Nb==1 || Nb==2)
+       && Njet > 5
+       && mT<150
+       ) passed=true;
     
     if(Region=="nothing" 
         && HT > 500 
@@ -90,7 +115,7 @@ bool PassSelection(TString Region,
         && MJ > -1 
     )  passed = true;
 
-      if(Region=="baseline" && PassNLep(1) 
+      if(Region=="baseline" && PassNLepExcl(1) 
         && HT > 500 
         && MET > 200
         && Nb > 1 
@@ -99,7 +124,7 @@ bool PassSelection(TString Region,
         && MJ > -1 
     )  passed = true;
 
-      if(Region=="baseline_1B" && PassNLep(1) 
+      /* if(Region=="baseline_1B" && PassNLepExcl(1) 
         && HT > 500 
         && MET > 200 && MET < 400
         && Nb == 1 
@@ -109,7 +134,7 @@ bool PassSelection(TString Region,
     )  passed = true;
 
      
-    if(Region=="SR0" &&  PassNLep(1)
+    if(Region=="SR0" &&  PassNLepExcl(1)
         && HT > 500 
         && MET > 400
         && Nb > 1 
@@ -118,7 +143,7 @@ bool PassSelection(TString Region,
         && MJ > 600 
     )  passed = true;
     
-    if(Region=="SR1" && PassBaselineSelection() &&  PassNLep(1)
+    if(Region=="SR1" && PassBaselineSelection() &&  PassNLepExcl(1)
         && HT > 500
         && MET > 250 
         && Nb > 1 
@@ -127,7 +152,7 @@ bool PassSelection(TString Region,
         && MJ > 600 
     )  passed = true;
 
-    if(Region=="SR0_lowmT" && PassBaselineSelection() &&  PassNLep(1)
+    if(Region=="SR0_lowmT" && PassBaselineSelection() &&  PassNLepExcl(1)
         && HT > 500 
         && MET > 400
         && Nb > 1 
@@ -136,7 +161,7 @@ bool PassSelection(TString Region,
         && MJ > 600 
     )  passed = true;
     
-    if(Region=="SR1_lowmT" && PassBaselineSelection() &&  PassNLep(1)
+    if(Region=="SR1_lowmT" && PassBaselineSelection() &&  PassNLepExcl(1)
         && HT > 500
         && MET > 250 
         && Nb > 1 
@@ -144,8 +169,8 @@ bool PassSelection(TString Region,
         && mT < 150 
         && MJ > 600 
     )  passed = true;
-
-    if(Region=="SRstats" && PassBaselineSelection() &&  PassNLep(1)
+    
+    if(Region=="SRstats" && PassBaselineSelection() &&  PassNLepExcl(1)
         && HT > 500
         && MET > 250 
         && Nb > 1 
@@ -154,7 +179,7 @@ bool PassSelection(TString Region,
         && MJ > 400 
     )  passed = true;
 
- if(Region=="SRstats1" && PassBaselineSelection() &&  PassNLep(1)
+ if(Region=="SRstats1" && PassBaselineSelection() &&  PassNLepExcl(1)
         && HT > 500
         && MET > 400 
         && Nb > 1 
@@ -163,7 +188,7 @@ bool PassSelection(TString Region,
         && MJ > 400 
     )  passed = true;
 
-  if(Region=="SRstats_lowmT" && PassBaselineSelection() &&  PassNLep(1)
+  if(Region=="SRstats_lowmT" && PassBaselineSelection() &&  PassNLepExcl(1)
         && HT > 500
         && MET > 250 
         && Nb > 1 
@@ -172,7 +197,7 @@ bool PassSelection(TString Region,
         && MJ > 400 
     )  passed = true;
 
- if(Region=="SRstats1_lowmT" && PassBaselineSelection() &&  PassNLep(1)
+ if(Region=="SRstats1_lowmT" && PassBaselineSelection() &&  PassNLepExcl(1)
         && HT > 500
         && MET > 400 
         && Nb > 1 
@@ -181,8 +206,8 @@ bool PassSelection(TString Region,
         && MJ > 400 
     )  passed = true;
  
-    
-    if(Region=="SRincl"  &&  PassNLep(1)
+    */
+    if(Region=="SRincl"  &&  PassNLepExcl(1)
         && HT > 500
         && MET > 250 
         && Nb > 1 
@@ -191,7 +216,17 @@ bool PassSelection(TString Region,
         && MJ > -1 
     )  passed = true;
 
-    if(Region=="VR_2l"  &&  PassNLep(2)
+
+     if(Region=="SRincl_highMET"  &&  PassNLepExcl(1)
+        && HT > 500
+        && MET > 400 
+        && Nb > 1 
+        && Njet > 5 
+        && mT > 150
+        && MJ > -1 
+    )  passed = true;
+
+    if(Region=="VR_2l"  &&  PassNLepExcl(2)
         && HT > 500
         && MET > 200 && MET <400 
         && (Nb==1 || Nb==2)
@@ -200,7 +235,25 @@ bool PassSelection(TString Region,
         && MJ > -1 
     )  passed = true;
 
-    if(Region=="SRincl_lowMET" &&  PassNLep(1)
+    if(Region=="VR_2l_and_1l1vl"  &&  (PassNLepExcl(2) || (PassNLep(1) && !PassNLepExcl(1)))
+        && HT > 500
+        && MET > 200 && MET <400 
+        && (Nb==1 || Nb==2)
+        && Njet > 4 
+        && mT > -1
+        && MJ > -1 
+    )  passed = true;
+
+    if(Region=="VR_2l_and_1l1vlalt"  &&  (PassNLepExcl(2) || (PassNLep(1) && !PassNLepExcl(1) && mT<150))
+        && HT > 500
+        && MET > 200 && MET <400 
+        && (Nb==1 || Nb==2)
+        && Njet > 4 
+        && mT > -1
+        && MJ > -1 
+    )  passed = true;
+    
+    if(Region=="SRincl_lowMET" &&  PassNLepExcl(1)
         && HT > 500
         && MET > 200 
         && Nb > 1 
@@ -210,7 +263,7 @@ bool PassSelection(TString Region,
     )  passed = true;
 
 
-    if(Region=="1B_hi_mT"&& Pass1BBaselineSelection() &&  PassNLep(1)
+    /* if(Region=="1B_hi_mT"&& Pass1BBaselineSelection() &&  PassNLepExcl(1)
        && HT > 500
         && MET > 200 
         && Nb ==1 
@@ -219,7 +272,7 @@ bool PassSelection(TString Region,
         && MJ > -1 
     )  passed = true;
 
-    /* if(Region=="1B_sl"&& Pass1BBaselineSelection() &&  PassNLep(1) && ChainName.Contains("TT") && Ngenlep == 1
+     if(Region=="1B_sl"&& Pass1BBaselineSelection() &&  PassNLepExcl(1) && ChainName.Contains("TT") && Ngenlep == 1
        && HT > 500
         && MET > 200 
         && Nb ==1 
@@ -228,7 +281,7 @@ bool PassSelection(TString Region,
         && MJ > -1 
     )  passed = true;
 
-    if(Region=="1B_ll"&& Pass1BBaselineSelection() &&  PassNLep(1) && ChainName.Contains("TT") && Ngenlep == 2
+    if(Region=="1B_ll"&& Pass1BBaselineSelection() &&  PassNLepExcl(1) && ChainName.Contains("TT") && Ngenlep == 2
        && HT > 500
         && MET > 200 
         && Nb ==1 
@@ -237,7 +290,7 @@ bool PassSelection(TString Region,
         && MJ > -1 
     )  passed = true;
     
-    if(Region=="1B_lo_mT" && Pass1BBaselineSelection() &&  PassNLep(1)
+    if(Region=="1B_lo_mT" && Pass1BBaselineSelection() &&  PassNLepExcl(1)
        && HT >500
         && MET > 200 
         && Nb >1 
@@ -246,7 +299,7 @@ bool PassSelection(TString Region,
         && MJ > -1 
     )  passed = true;
 
-    if(Region=="2B_hi_mT" &&  PassNLep(1)
+    if(Region=="2B_hi_mT" &&  PassNLepExcl(1)
        && HT > 500
         && MET > 200 
         && Nb >1 
@@ -255,7 +308,7 @@ bool PassSelection(TString Region,
         && MJ > -1 
     )  passed = true;
     
-    if(Region=="2B_sl" &&  PassNLep(1) && ChainName.Contains("TT") && Ngenlep == 1
+    if(Region=="2B_sl" &&  PassNLepExcl(1) && ChainName.Contains("TT") && Ngenlep == 1
        && HT > 500
         && MET > 200 
         && Nb >1 
@@ -264,7 +317,7 @@ bool PassSelection(TString Region,
         && MJ > -1 
     )  passed = true;
 
-    if(Region=="2B_ll"&&  PassNLep(1) && ChainName.Contains("TT") && Ngenlep == 2
+    if(Region=="2B_ll"&&  PassNLepExcl(1) && ChainName.Contains("TT") && Ngenlep == 2
        && HT > 500
         && MET > 200 
         && Nb >1 
@@ -273,7 +326,7 @@ bool PassSelection(TString Region,
         && MJ > -1 
     )  passed = true;
     
-    if(Region=="2B_lo_mT"  &&  PassNLep(1)
+    if(Region=="2B_lo_mT"  &&  PassNLepExcl(1)
        && HT >500
         && MET > 200 
         && Nb >1 
@@ -283,7 +336,7 @@ bool PassSelection(TString Region,
     )  passed = true;
 
 
-    if(Region=="1B2lCR0" && Pass1BBaselineSelection() &&  PassNLep(2)
+    if(Region=="1B2lCR0" && Pass1BBaselineSelection() &&  PassNLepExcl(2)
        && HT > 750
        && MET > 250 
        && Nb ==1 
@@ -292,16 +345,7 @@ bool PassSelection(TString Region,
        && MJ > -1 
     )  passed = true;
     */
-      if(Region=="1BCRincl_lowMET" && Pass1BBaselineSelection() &&  PassNLep(1)
-       && HT > 500
-        && MET > 250 
-        && Nb ==1
-        && Njet > 5 
-        && mT > -1
-        && MJ > -1 
-    )  passed = true;
-
-    if(Region=="1BCRincl" && Pass1BBaselineSelection() &&  PassNLep(1)
+      if(Region=="1BCRincl_lowMET" && Pass1BBaselineSelection() &&  PassNLepExcl(1)
        && HT > 500
         && MET > 200 
         && Nb ==1
@@ -310,7 +354,16 @@ bool PassSelection(TString Region,
         && MJ > -1 
     )  passed = true;
 
-       if(Region=="1B4SJCRincl" && PassLowSJ1BBaselineSelection() &&  PassNLep(1)
+    if(Region=="1BCRincl" && Pass1BBaselineSelection() &&  PassNLepExcl(1)
+       && HT > 500
+        && MET > 250 
+        && Nb ==1
+        && Njet > 5 
+        && mT > -1
+        && MJ > -1 
+    )  passed = true;
+
+    /*  if(Region=="1B4SJCRincl" && PassLowSJ1BBaselineSelection() &&  PassNLepExcl(1)
        && HT > 750
         && MET > 250 
         && Nb ==1 
@@ -319,7 +372,7 @@ bool PassSelection(TString Region,
         && MJ > -1 
     )  passed = true;
 
-       /*if(Region=="1B45SJ" && PassLowSJ1BBaselineSelection() &&  PassNLep(1)
+       if(Region=="1B45SJ" && PassLowSJ1BBaselineSelection() &&  PassNLepExcl(1)
 	  && HT > 750
 	  && MET > 250 
 	  && Nb ==1 
@@ -327,7 +380,7 @@ bool PassSelection(TString Region,
 	  && mT > -1
 	  && MJ > -1 
 	  )  passed = true;
-       if(Region=="1B67SJ" && PassLowSJ1BBaselineSelection() &&  PassNLep(1)
+       if(Region=="1B67SJ" && PassLowSJ1BBaselineSelection() &&  PassNLepExcl(1)
 	  && HT > 750
 	  && MET > 250 
 	  && Nb ==1
@@ -335,7 +388,7 @@ bool PassSelection(TString Region,
 	  && mT > -1
 	  && MJ > -1 
 	  )  passed = true;
-       if(Region=="1B8SJ" && PassLowSJ1BBaselineSelection() &&  PassNLep(1)
+       if(Region=="1B8SJ" && PassLowSJ1BBaselineSelection() &&  PassNLepExcl(1)
 	  && HT > 750
 	  && MET > 250 
 	  && Nb ==1
@@ -344,7 +397,7 @@ bool PassSelection(TString Region,
 	  && MJ > -1 
 	  )  passed = true;
 
-     if(Region=="AllBCRincl" && PassAllBBaselineSelection() &&  PassNLep(1)
+     if(Region=="AllBCRincl" && PassAllBBaselineSelection() &&  PassNLepExcl(1)
        && HT > 750
         && MET > 250 
         && Nb > -1 
@@ -353,7 +406,7 @@ bool PassSelection(TString Region,
         && MJ > -1 
     )  passed = true;
 
-     if(Region=="1B2lCRincl" && Pass1BBaselineSelection() &&  PassNLep(2)
+     if(Region=="1B2lCRincl" && Pass1BBaselineSelection() &&  PassNLepExcl(2)
        && HT > 750
         && MET > 250 
         && Nb ==1 
@@ -362,7 +415,7 @@ bool PassSelection(TString Region,
         && MJ > -1 
     )  passed = true;
 
-     if(Region=="1B2lCRincl_loose" && Pass2l_loose_1BBaselineSelection() &&  PassNLep(2)
+     if(Region=="1B2lCRincl_loose" && Pass2l_loose_1BBaselineSelection() &&  PassNLepExcl(2)
        && HT > -1
         && MET > 250 
         && Nb > -1 
@@ -371,7 +424,7 @@ bool PassSelection(TString Region,
         && MJ > -1 
     )  passed = true;
        
-    if(Region=="1BSR0" && Pass1BBaselineSelection() &&  PassNLep(1)
+    if(Region=="1BSR0" && Pass1BBaselineSelection() &&  PassNLepExcl(1)
         && HT > -1 
         && MET > 400
         && Nb > -1 
