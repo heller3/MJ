@@ -251,7 +251,7 @@ void DoAnalysis(bool OnlyDraw=false)
     OverlaySF_TT(2,sysname[0]);
     OverlaySF_TT(2,sysname[1]);
     OverlaySF_TT(2,sysname[2]);*/
-  GetYields();
+  //GetYields();
   gSystem->Exec(Form("cp DoAnalysis.C Out/%s_v%i/",study.Data(),version));
   gSystem->Exec(Form("cp Configuration.h Out/%s_v%i/",study.Data(),version));
   gSystem->Exec(Form("cp MakeHists.C Out/%s_v%i/",study.Data(),version));

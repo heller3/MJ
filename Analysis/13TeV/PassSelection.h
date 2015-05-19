@@ -110,7 +110,7 @@ bool PassSelection(TString Region,
         && HT > 500 
         && MET > 200
         && Nb > 0 
-        && Njet > 3
+        && Njet > 4
         && mT > -1
         && MJ > -1 
     )  passed = true;

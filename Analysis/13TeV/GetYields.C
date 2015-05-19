@@ -73,7 +73,7 @@ void GetYields(/*, char* Region=(char*)"baseline"*/){
 	  }
 	}
       }
-    TString name[] = {"4+ SJ","6+ SJ"};
+    TString name[] = {"5+ SJ","6+ SJ"};
     TString HTname[] = {"HT 500","HT 750"};
     int nsjbegin[] = {0,1};
     int nHTbegin[] = {0,1};

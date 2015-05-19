@@ -15,16 +15,17 @@
 #include "TGraphErrors.h"
 
 
-int version = 41;
+int version = 44;
 bool OnlyEssential=true;
-TString BabyDir = "/net/cms26/cms26r0/jaehyeok/baby/Fatjet/13TeV/";
+TString BabyDir =// "/net/cms26/cms26r0/rohan/Babies/Phys14_05May2015/HT500MET200/";
+   "/net/cms26/cms26r0/jaehyeok/baby/Fatjet/13TeV/";
 //TString BabyDir = "/Users/heller/Jae/ntuples/Z_sample/";
 //TString BabyDir = "/cms5r0/ald77/archive/20150428/skim/";
 
 bool status =true;
 bool manuel=false;
 bool hasQ=false;
-float lumi = 3.0;
+float lumi = 10.0;
 
     //"/Users/heller/Jae/ntuples/JetPt20_04April_NoSkim/";
 
@@ -81,14 +82,15 @@ char* Regions[] = {"1BCRincl","1BCRincl_lowMET","VR_2l","SRincl","SRincl_lowMET"
 int SRthres=1;
 */
 //39
+
 TString study = "Residuals_3ifb";
 
-char* sysname[] = {"_MC_is_infallible","_ISRpT3","_nISR"};
-int nsys=3;
+char* sysname[] = {"_MC_is_infallible",/*"_ISRpT3",*/"_nISR"};
+int nsys=2;
 
-int nregion=10;
-char* Regions[] = {"1BCRincl","1BCRincl_lowMET","lowmTCR","lowmTlowMETCR","VR_2l","VR_2l_and_1l1vl","VR_2l_and_1l1vlalt","SRincl_lowMET","SRincl","SRincl_highMET"};
-int SRthres=3;
+int nregion=8;
+char* Regions[] = {"lowmTCR","lowmTlowMETCR","VR_2l","VR_2l_and_1l1vl","VR_2l_and_1l1vlalt","SRincl_lowMET","SRincl","SRincl_highMET"};
+int SRthres=1;
 /*
 TString study = "counts";
 
@@ -98,7 +100,7 @@ int nsys=1;
 int nregion=1;
 char* Regions[] = {"baseline"};
 int SRthres=2;
-  */
+*/
 /*
 TString study = "weird_event_dump";
 

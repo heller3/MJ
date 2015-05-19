@@ -47,7 +47,7 @@ void Fluctuate(char* Region_measure, char* Region_check, TString HistName, char*
   TH1F *h1_measure_f1500_100[7], *h1_measure_f1200_800[7];
 
   TH1F * h1_resids[7];
-  
+  TH1F * h1_resids_no_corr[7];
   TCanvas *c = new TCanvas("c","c",1200,800); 
   c->Divide(3,2);
   for(unsigned int i=2; i<7; i++) {
@@ -169,11 +169,13 @@ void Fluctuate(char* Region_measure, char* Region_check, TString HistName, char*
     float resid_non_fluc = check_pseudodata - ((measure_pseudodata - measure_non_tt_subtraction)*check_ttbar_pred/measure_ttbar_pred +check_non_tt_pred);
     float mc_pred_non_fluc = ((measure_pseudodata - measure_non_tt_subtraction)*check_ttbar_pred/measure_ttbar_pred +check_non_tt_pred);
     h1_resids[i] = new TH1F(Form("h1_resids_%i",i),Form("h1_resids_%i",i),100,-10,10); 
+    h1_resids_no_corr[i] = new TH1F(Form("h1_resids_corr_%i",i),"",20,-10,10);
     TRandom3 rand;
     rand.SetSeed(0);
     for(int ifluc=0; ifluc<nfluc; ifluc++){
       //flucuate check_pseudodata
       int fluc_check_pseudodata= rand.Poisson(check_pseudodata);
+      h1_resids_no_corr[i]->Fill(fluc_check_pseudodata-check_MC);
       //flucuate measure_pseudodata
       int fluc_measure_pseudodata= rand.Poisson(measure_pseudodata);
 
@@ -196,11 +198,17 @@ void Fluctuate(char* Region_measure, char* Region_check, TString HistName, char*
     if(i==6) StackTitle = "All fatjets";
     if(i==5) StackTitle = "5+ fatjets";
     h1cosmetic(h1_resids[i],          (char*)StackTitle.Data(),               kBlack, 1, 31,           "Pseudodata - Corrected Prediction [Events]");
+    h1cosmetic(h1_resids_no_corr[i],          (char*)StackTitle.Data(),               20, 1, 0,           "Pseudodata - Corrected Predic\
+tion [Events]");
     h1_resids[i]->SetStats("mr");
     h1_resids[i]->SetMaximum(nfluc/9);
+    h1_resids_no_corr[i]->Scale(0.2); //compensate for 5x larger bins
+    h1_resids_no_corr[i]->SetMaximum(nfluc/9);
+
 
       //cout<<"Resid non fluc:"<<resid_non_fluc<<endl;
     h1_resids[i]->Draw("hist");
+    h1_resids_no_corr[i]->Draw("hist same");
     gPad->Update();
     TPaveStats *st = (TPaveStats*)gPad->GetPrimitive("stats");
     st->SetX1NDC(0.65);
